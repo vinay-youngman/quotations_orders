@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_sale_order_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                   <field name="partner_id" position="replace" >
+                            <field name="partner_id"/>
+                            <field name="customer_branch" attrs="{'invisible': [('tentative_quo', '=', True)]}" position="attributes">
+                                <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False, 'is_company': True, 'is_customer_branch': True}</attribute>
+                            </field>
+
+                            <field name="jobsite_id" position="attributes">
+                                <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False}</attribute>
+                            </field>
+                            <field name="godown"/>
+                            <field name="bill_godown" invisible="1"/>
+
+                            <label for="delivery_street" string="Delivery Address"/>
+                            <div class="o_address_format">
+                                <field name="delivery_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
+                                <field name="delivery_street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="delivery_city" placeholder="City" class="o_address_city"/>
+                                <field name="delivery_state_id" placeholder="State" class="o_address_state" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="delivery_zip" placeholder="Pincode" class="o_address_zip"/>
+                                <field name="delivery_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                            </div>
+
+                            <field name="delivery_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+
+                            <field name="freight_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                            <field name="security_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                            <field name="freight_paid_by" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+
+                            <field name="tentative_quo"/>
+                            <field name="below_min_price"/>
+
+                        <div>
+                            <field name="otp" attrs="{'invisible': [('below_min_price', '=', False)]}"/>
+                            <button name="request_otp" type="object" string="Request OTP" attrs="{'invisible': [('below_min_price', '=', False)]}"/>
+                            <button name="verify_otp" type="object" string="Verify OTP" attrs="{'invisible': [('below_min_price', '=', False)]}"/>
+                        </div>
+
+                     </field>
+
+                <xpath expr="//group[@name='order_details']/field[@name='validity_date']" position="attributes">
+                <attribute name ="attrs"> {'invisible' : True} </attribute>
+                </xpath>
+                <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="attributes">
+                <attribute name ="attrs"> {'invisible' : True} </attribute>
+                </xpath>
+                 <xpath expr="//page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='customer_signature']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+               <xpath expr="//group[@name='order_details']" position="inside">
+                   <field name="purchaser_name"/>
+                   <field name="purchaser_phone"/>
+                   <field name="purchaser_email"/>
+
+                   <field name="price_type" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+
+                   <label for="billing_street" string="Billing Address"/>
+                   <div class="o_address_format">
+                       <field name="billing_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
+                       <field name="billing_street2" placeholder="Street 2..." class="o_address_street"/>
+                       <field name="billing_city" placeholder="City" class="o_address_city"/>
+                       <field name="billing_state_id" placeholder="State" class="o_address_state" options="{'no_open': True, 'no_create': True}"/>
+                       <field name="billing_zip" placeholder="Pincode" class="o_address_zip"/>
+                       <field name="billing_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                   </div>
+
+
+                   <field name="pickup_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                   <field name="email_to"/>
+                   <field name="email_cc"/>
+                   <field name="job_order"/>
+                   <field name="po_number"/>
+                   <field name="place_of_supply"/>
+                   <field name="first_bill"/>
+                   <field name="rental_advance"/>
+                   <field name="rental_order"/>
+                   <field name="security_cheque"/>
+                   <field name="amendment_doc"/>
+                   <field name="released_at"/>
+                   <field name="reason_of_release"/>
+                   <field name="is_authorized"/>
+                   <field name="part_pickup"/>
+                   <field name="remark"/>
+
+                   <div>
+                        <field name="is_rental_advance"  attrs="{'invisible': True}"/>
+                        <field name="is_rental_order"  attrs="{'invisible': True}"/>
+                        <field name="is_security_cheque"  attrs="{'invisible': True}"/>
+
+
+<!--                        <label for="rental_advance" string="Rental Advance" attrs="{'invisible': [('is_rental_advance', '=', False)]}"/>-->
+<!--                        <field name="rental_advance" attrs="{'invisible': [('is_rental_advance', '=', False)]}"/>-->
+
+<!--                        <label for="rental_order" string="Rental Order" attrs="{'invisible': [('is_rental_order', '=', False)]}"/>-->
+<!--                        <field name="rental_order" attrs="{'invisible': [('is_rental_order', '=', False)]}"/>-->
+
+<!--                        <label for="security_cheque" string="Security Cheque" attrs="{'invisible': [('is_security_cheque', '=', False)]}"/>-->
+<!--                        <field name="security_cheque" attrs="{'invisible': [('is_security_cheque', '=', False)]}"/>-->
+                   </div>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="view_product_template_inherit" model="ir.ui.view">
+            <field name="name">product.template.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='detailed_type']"></xpath>-->
+                <xpath expr="//field[@name='barcode']" position="replace"></xpath>
+                <group>
+                    <group>
+                        <field name="status"></field>
+                        <field name="meters"></field>
+                        <field name="length"></field>
+                        <field name="breadth"></field>
+                        <field name="height"></field>
+                        <field name="actual_weight"></field>
+                        <field name="vol_weight"></field>
+                        <field name="cft"></field>
+                    </group>
+                    <group>
+                        <field name="barcode"  attrs="{'invisible': True}"></field>
+                        <field name="missing_estimate_value"></field>
+                        <field name="material"></field>
+                        <field name="item_type"></field>
+                        <field name="purchase_code"></field>
+                        <field name="supplier"></field>
+                        <field name="bundle"></field>
+                        <field name="consumable"></field>
+                        <field name="serialized"></field>
+                     </group>
+                </group>
+            </field>
+
+        </record>
+
+
+
+    </data>
+</odoo>

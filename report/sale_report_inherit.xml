@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
+		<xpath expr="//h2[@class='mt16']" position="replace">
+			<div class="row">
+				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
+			</div>
+
+			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+				<tr>
+					<td><strong>CUSTOMER NAME</strong></td>
+					<td><span t-field="doc.partner_id.name"/></td>
+				</tr>
+				<tr>
+					<td><strong>PICKUP DATE</strong></td>
+					<td><span t-field="doc.pickup_date"/></td>
+				</tr>
+				<tr>
+					<td><strong>SUB CUSTOMER GST</strong></td>
+					<td><span t-field="doc.partner_id.vat"/></td>
+				</tr>
+				<tr>
+					<td><strong>QUOTATION NUMBER</strong></td>
+					<td><span t-field="doc.name"/></td>
+				</tr>
+				<tr>
+					<td><strong>QUOTATION DATE</strong></td>
+					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
+				</tr>
+			</table><br/>
+
+                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+			<table id="quotation_tab" class="table table-sm o_main_table">
+				<thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_kind_attention" class="text-left"><b>KIND ATTENTION</b></th>
+                        <th name="th_delivery_addr" class="text-left"><b>DELIVERY ADDRESS</b></th>
+                        <th name="th_billing_addr" class="text-left"><b>BILLING ADDRESS</b></th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+					<tr>
+						<td name="td_kind_attention">
+							<span t-field="doc.purchaser_name.name"/><br/>
+							<span t-field="doc.partner_id.street"/>
+							<span t-field="doc.partner_id.street2"/>
+							<span t-field="doc.partner_id.zip"/>
+						</td>
+						<td name="td_delivery_addr">
+							<span t-field="doc.delivery_street"/>
+							<span t-field="doc.delivery_street2"/>
+							<span t-field="doc.delivery_city"/>
+							<span t-field="doc.delivery_state_id.name"/>
+							<span t-field="doc.delivery_zip"/>
+						</td>
+						<td name="td_billing_addr">
+							<span t-field="doc.billing_street"/>
+							<span t-field="doc.billing_street2"/>
+							<span t-field="doc.billing_city"/>
+							<span t-field="doc.billing_state_id.name"/>
+							<span t-field="doc.billing_zip"/>
+						</td>
+					</tr>
+                </tbody>
+            </table>
+		</xpath>
+
+		<xpath expr="//div[@id='informations']" position="replace">
+
+		</xpath>
+
+		<xpath expr="//p[@id='fiscal_position_remark']" position="after">
+
+			<table class="table table-sm o_main_table">
+                <tbody class="sale_tbody">
+					<tr>
+					  <th style="width: 336.5px; font-size: 16px; text-align:center">Freight with inco. terms</th>
+						<td id= "d1" style = "width: 336.5px; font-size: 14px;">
+						<ol><br/>
+							<span t-esc="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+							<br/>
+							<br/>
+							<span t-field="doc.freight_paid_by"/>
+						  </ol>
+						</td>
+					</tr>
+					<tr>
+					  <th id= "t1" style="width: 336.5px; font-size: 16px; text-align:center">
+					  Taxes extra as per prevailing GST regime
+					</th>
+					  <td id= "d1" style = "width: 336.5px; font-size: 14px;"></td>
+					</tr>
+					<tr>
+					  <th id= "t1" style="width: 336.5px; font-size: 16px; text-align:center">
+					  Payment Methods
+					  </th>
+					<td id= "d1" style = "width: 336.5px; font-size: 14px;">
+					<ol>
+					<li>Bank
+					<br/>Account Name: Youngman India Pvt. Ltd.
+					<br/>Bank Account No: 50200062226670
+					<br/>Bank IFSC Code: HDFC0002845
+					<br/>Branch Address: HDFC Omega Branch , Greater-noida</li>
+					</ol>
+					</td>
+					</tr>
+                </tbody>
+            </table>
+
+
+            <p style="text-align:justify"><u><strong>RENTAL TERMS &amp; CONDITIONS</strong></u></p>
+
+			<ol>
+				<li>
+				<p style="text-align:justify">Kindly issue a formal <strong>Work Order</strong> in the name of</p>
+				</li>
+				<li>
+				<p style="text-align:justify"><strong><span t-field="doc.bill_godown.name"/></strong><br />
+				<strong><span t-field="doc.bill_godown.address"/></strong></p>
+				</li>
+				<li>
+				<p style="text-align:justify"><strong>One Month Advance</strong> is required and will be adjusted against the last bill of rental.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Damage and Missing Policy seperately mentioned below shall be applicable.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">If Material has to be delivered to any floor where lift facility is not available extra loading and/or unloading charges of INR 300 per meter for delivery from 1st Floor to 5th Floor and INR 500 per meter for delivery above 5th floor shall be applicable.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">YIPL reserves all rights of pickup of material in case of any Invoice payment default and customer shall support in process of pickup.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">We support Online payments via, Netbanking, Razorpay links.</p>
+
+				<p style="text-align:justify">In case of Cheque collection charges @ 500 + GST and also cheque bounce charges shall be 500 + 18% GST.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Kindly issue Non Dated cheque / BG / Payment for rental material as a security deposit of not less than !total estimate value of quote!</p>
+				</li>
+				<li>
+				<p style="text-align:justify">The cheque must be in multiple of 49000.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">In case of default of PO payment terms, then Youngman India shall be authorised to adjust the security provided by you to clear the liability and forcefully take custody of material.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Rental billing shall cease either 2 days after intimation or successful pickup whichever is earlier.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Failed Pickups shall be chargeable as extra pickups.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">The rental of the material provided to you shall continue to accrue on the same payment terms if in case the time limit of rental has expired and you have not taken extension for the same from Youngman to keep the material with you. Youngman shall be entitled to collect rent for each and every day after the time limit from you till the date the material is in your possession as per existing payment terms and penal rental if any as applicable.</p>
+				</li>
+			</ol>
+
+			<p style="text-align:justify"><u><strong>BILLING &amp; PAYMENT PROCEDURE WITH TERMS</strong></u></p>
+
+			<ol>
+				<li>
+				<p style="text-align:justify">We are registered under MSME: UDYAM-DL-01-0000010.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Section 16 of the MSMED Act provides that in case buyer fails to make payment of amount to the MSME supplier, then the buyer shall be liable to pay compound interest with monthly rest to such supplier. This provision has an overriding effect on the agreement, if any, between the buyer and the MSME supplier.</p>
+
+				<p style="text-align:justify">Further, Section 17 of MSMED Act provides that for goods supplied or services rendered bythe MSME supplier, the buyer shall be liable to pay amount with interest thereon as provided under Section 16.</p>
+
+				<p style="text-align:justify">Section 16 of the MSMED Act provides that the buyer shall be liable to pay compound interest with monthly rest to the MSME supplier at three times the bank rate notified by the RBI.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Invoices shall be made on every first day of the next month for the month closing, and shall be sent over by email to your registered email address same day.</p>
+
+				<p style="text-align:justify">Mid month clsoure invoices shall be sent over email within 1-2 days of pickup.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Account Managers shall also submit in voices, but in case if account manager is not able to submit the invoice, e-copyiswellvalidand can be used for GST claims</p>
+				</li>
+				<li>
+				<p style="text-align:justify">If any discrepancy is found in the invoice, please reply to the invoice email and same shall be rectified within 24 hours.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">Credit limit and credit days have to be maintained in strict accordance and agreement and failure to do so shall also reflect in our service level downgrades.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">For Rental closure, a formal written communication will only be accepted by your registered email ID to <u>SunilKr@youngman.co.in</u> .</p>
+				</li>
+				<li>
+				<p style="text-align:justify">If, within 30 (30) days of receipt of the Bill, the Customer does not notify YIPL in writing of a dispute related to the Bill, the Customer shall be deemed to have waived any dispute related to the Bill and the Bill shall be considered correct and complete. In case of any dispute including dispute of non-payment in respect of any Bill raised by YIPL, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
+				</li>
+			</ol>
+
+			<p style="text-align:justify"><u><strong>MISSING &amp; DAMAGES POLICY</strong></u></p>
+
+			<ol>
+				<li>
+				<p style="text-align:justify">In Case of Damage only and not missing, to avail a cover upto a certain limit, you can opt for<br />
+				YOUNGMAN SILVER COVER: waiver upto first INR 50,000 estimate value, by paying extra 15% of the rental value YOUNGMAN GOLD COVER: waiver upto first INR 1,00,000 estimate value, by paying extra 25% of the rental value</p>
+				</li>
+				<li>
+				<p style="text-align:justify">At the time of delivery of material, material checklist is signed by your representative and can be used at time of pickup to justify if any claims are fair or not.</p>
+				</li>
+				<li>
+					<p style="text-align:justify">Damage Policy &amp; Price: <u>https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</u>> Missing Policy &amp; Price: <u>https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</u></p>
+				</li>
+				<li>
+				<p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order, and in any case if they disagree they have to explicitly mention the same at time of placing order in a written format.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">In case of non payment, Youngman has the right to utilize the security for settling the amount.</p>
+				</li>
+				<li>
+				<p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
+				</li>
+			</ol>
+
+			<p style="text-align:justify"><strong>I acknowledge that I have read, and do hereby accept the terms and conditions contained in this.</strong></p>
+
+        </xpath>
+
+    </template>
+
+
+</odoo>

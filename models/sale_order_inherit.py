@@ -14,17 +14,17 @@ from odoo.exceptions import ValidationError
 _logger = logging.getLogger(__name__)
 
 
-# class ResPartnerInherited(models.Model):
-#     _inherit = 'res.partner'
-#
-#     def name_get(self):
-#         result = []
-#         for rec in self:
-#             if rec.is_customer_branch:
-#                 result.append((rec.id, '%s - %s' % (rec.gstn, rec.state_id.name)))
-#             else:
-#                 result.append((rec.id, rec.name))
-#         return result
+class ResPartnerInherited(models.Model):
+    _inherit = 'res.partner'
+
+    def name_get(self):
+        result = []
+        for rec in self:
+            if rec.is_customer_branch:
+                result.append((rec.id, '%s - %s' % (rec.gstn, rec.state_id.name)))
+            else:
+                result.append((rec.id, rec.name))
+        return result
 
 
 class SaleOrderInherit(models.Model):

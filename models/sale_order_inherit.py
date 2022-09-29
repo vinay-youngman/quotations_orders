@@ -21,7 +21,7 @@ class ResPartnerInherited(models.Model):
         result = []
         for rec in self:
             if rec.is_customer_branch:
-                result.append((rec.id, '%s - %s' % (rec.gstn, rec.state_id.name)))
+                result.append((rec.id, '%s - %s' % (rec.gstn, rec.city)))
             else:
                 result.append((rec.id, rec.name))
         return result

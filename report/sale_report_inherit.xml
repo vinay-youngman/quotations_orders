@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
+		<xpath expr="//t[@t-set='address']" position="replace"/>
 		<xpath expr="//h2[@class='mt16']" position="replace">
 			<div class="row">
 				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>

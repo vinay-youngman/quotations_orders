@@ -387,7 +387,7 @@ class SaleOrderLineInherit(models.Model):
 
         product_id = self.product_id
         unit_price = self.env['product.product'].search([('id', '=', product_id.id)], limit=1).list_price
-        current_price = self.price_unit
+        current_price = unit_price
         if current_price < unit_price:
             self.price_unit = self._origin.price_unit
             return {

@@ -60,6 +60,8 @@ class SaleOrderInherit(models.Model):
     customer_branch = fields.Many2one(comodel_name='res.partner', string='Customer GSTs', domain="[('is_company', "
                                                                                                    "'=', True), "
                                                                                                    "('is_customer_branch', '=', True), ('parent_id', '=', partner_id)]")
+
+    billing_addresses = fields.Many2one(comodel_name='res.partner', string='Billing Addresses', domain="[('is_company','=', False),('is_customer_branch', '=', False), ('parent_id', '=', customer_branch), ('type', '=', 'invoice')]")
     # @api.model
     # def _amount_all(self):
     #     super(SaleOrderInherit, self)._amount_all()
@@ -276,14 +278,14 @@ class SaleOrderInherit(models.Model):
         if ((self.partner_id) and (self.tentative_quo is False)) and ((self.partner_id.is_company is False) or (self.partner_id.is_customer_branch is True)):
             raise ValidationError(_("Please select a Company"))
 
-    @api.onchange('customer_branch')
+    @api.onchange('billing_addresses')
     def get_billing_address(self):
-        if self.customer_branch:
-            self.billing_street = self.customer_branch.street
-            self.billing_street2 = self.customer_branch.street2
-            self.billing_city = self.customer_branch.city
-            self.billing_state_id = self.customer_branch.state_id
-            self.billing_zip = self.customer_branch.zip
+        if self.billing_addresses:
+            self.billing_street = self.billing_addresses.street
+            self.billing_street2 = self.billing_addresses.street2
+            self.billing_city = self.billing_addresses.city
+            self.billing_state_id = self.billing_addresses.state_id
+            self.billing_zip = self.billing_addresses.zip
 
     def verify_otp(self):
         otp = self._generate_otp()

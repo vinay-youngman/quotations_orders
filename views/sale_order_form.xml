@@ -37,7 +37,12 @@
                             <field name="freight_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="security_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="freight_paid_by" attrs="{'required': [('tentative_quo', '=', False)]}"/>
-
+                            <field name="bill_submission" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                            <field name="bill_site_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <field name="bill_office_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <field name="site_addr" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <field name="office_addr" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <field name="po_required" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
                             <field name="tentative_quo"/>
                             <field name="below_min_price"/>
 

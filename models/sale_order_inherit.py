@@ -126,6 +126,13 @@ class SaleOrderInherit(models.Model):
 
     pickup_date = fields.Date('Pickup Date')
 
+    bill_submission = fields.Many2one('res.partner.bill.sub', string='Bill Submission Process', required=True)
+    po_required = fields.Boolean('PO Required', default=False)
+    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact')
+    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact')
+    site_addr = fields.Char(string='Site Address')
+    office_addr = fields.Char(string='Office Address')
+
     @api.model
     def _get_default_godowns(self):
         godown = self.env['jobsite.godown'].search([('id', 'in', self.jobsite_id.godown_id)]).name

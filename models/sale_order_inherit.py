@@ -38,7 +38,7 @@ class SaleOrderInherit(models.Model):
 
     jobsite_id = fields.Many2one('jobsite', string='Site Name')
     tentative_quo = fields.Boolean('Tentative Quotation', default=False)
-    partner_id = fields.Many2one(comodel_name='res.partner', domain="[('is_customer_branch', '=', False)]")
+    partner_id = fields.Many2one(comodel_name='res.partner', domain="[('is_company', '=', True),('is_customer_branch', '=', False)]")
     validity_date = fields.Date(invisible=True)
     job_order = fields.Char(string="Job Order")
 
@@ -128,8 +128,8 @@ class SaleOrderInherit(models.Model):
 
     bill_submission = fields.Many2one('res.partner.bill.sub', string='Bill Submission Process', required=True)
     po_required = fields.Boolean('PO Required', default=False)
-    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact')
-    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact')
+    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact', domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact', domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
     site_addr = fields.Char(string='Site Address')
     office_addr = fields.Char(string='Office Address')
 
@@ -138,7 +138,6 @@ class SaleOrderInherit(models.Model):
         godown = self.env['jobsite.godown'].search([('id', 'in', self.jobsite_id.godown_id)]).name
         return godown
 
-    #jobsite_godowns = fields.Boolean(related='jobsite_id.godown_ids', store=False)
     godown = fields.Many2one("jobsite.godown", string='Godown', ondelete='restrict')
     bill_godown = fields.Many2one("jobsite.godown", string='Billing Godown', ondelete='restrict')
 

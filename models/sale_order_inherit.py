@@ -13,6 +13,10 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+class BillSubmission(models.Model):
+    _name = 'bill.submission'
+    _description = 'Bill Submission'
+    name = fields.Char(string='Bill Submission', required=True)
 
 class ResPartnerInherited(models.Model):
     _inherit = 'res.partner'
@@ -43,9 +47,6 @@ class SaleOrderInherit(models.Model):
     job_order = fields.Char(string="Job Order")
 
     place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict', domain="[('country_id', '=', billing_country_id)]")
-    rental_advance = fields.Char(string="Rental Advance")
-    rental_order = fields.Char(string="Rental Order")
-    security_cheque = fields.Char(string="Security Cheque")
     # amendment_doc = fields.Char(string="Amendment Doc")
     # released_at = fields.Datetime(string="Released At")
     # reason_of_release = fields.Selection([
@@ -104,34 +105,61 @@ class SaleOrderInherit(models.Model):
     billing_street = fields.Char(string="Billing Address")
     billing_street2 = fields.Char()
     billing_city = fields.Char()
-    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict',
-                                         default=_get_default_country)
-    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict',
-                                       domain="[('country_id', '=', billing_country_id)]")
-
+    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict', default=_get_default_country)
+    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict', domain="[('country_id', '=', billing_country_id)]")
     billing_zip = fields.Char(string='Billing Pincode', change_default=True)
 
     # Delivery Address
     delivery_street = fields.Char(string="Delivery Address")
     delivery_street2 = fields.Char()
     delivery_city = fields.Char()
-    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict',
-                                          default=_get_default_country)
-    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',
-                                        domain="[('country_id', '=', delivery_country_id)]")
-
+    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict',default=_get_default_country)
+    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',domain="[('country_id', '=', delivery_country_id)]")
     delivery_zip = fields.Char(string='Delivery Pincode', change_default=True)
+
+    same_site_addr = fields.Boolean(default=False, string="Same as Delivery Address")
+    site_street = fields.Char(string="Site Address")
+    site_street2 = fields.Char()
+    site_city = fields.Char()
+    site_country_id = fields.Many2one('res.country', string='Site Country', ondelete='restrict', default=_get_default_country)
+    site_state_id = fields.Many2one("res.country.state", string='Site State', ondelete='restrict', domain="[('country_id', '=', site_country_id)]")
+    site_zip = fields.Char(string='Site Pincode', change_default=True)
+
+    same_office_addr = fields.Boolean(default=False, string="Same as Billing Address")
+    office_street = fields.Char(string="Office Address")
+    office_street2 = fields.Char()
+    office_city = fields.Char()
+    office_country_id = fields.Many2one('res.country', string='Office Country', ondelete='restrict', default=_get_default_country)
+    office_state_id = fields.Many2one("res.country.state", string='Office State', ondelete='restrict', domain="[('country_id', '=', office_country_id)]")
+    office_zip = fields.Char(string='Office Pincode', change_default=True)
+
     email_to = fields.Char(string='Email To')
     email_cc = fields.Char(string='Email CC')
 
     pickup_date = fields.Date('Pickup Date')
 
-    bill_submission = fields.Many2one('res.partner.bill.sub', string='Bill Submission Process', required=True)
+    bill_submission = fields.Many2one('bill.submission', string='Bill Submission Process')
     po_required = fields.Boolean('PO Required', default=False)
-    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact', domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
-    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact', domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
-    site_addr = fields.Char(string='Site Address')
-    office_addr = fields.Char(string='Office Address')
+
+    @api.onchange('same_site_addr')
+    def _onchange_same_site_addr(self):
+        if self.same_site_addr:
+            self.site_street = self.delivery_street
+            self.site_street2 = self.delivery_street2
+            self.site_city = self.delivery_city
+            self.site_state_id = self.delivery_state_id
+            self.site_zip = self.delivery_zip
+            self.site_country_id = self.delivery_country_id
+
+    @api.onchange('same_office_addr')
+    def _onchange_same_office_addr(self):
+        if self.same_office_addr:
+            self.office_street = self.billing_street
+            self.office_street2 = self.billing_street2
+            self.office_city = self.billing_city
+            self.office_state_id = self.billing_state_id
+            self.office_zip = self.billing_zip
+            self.office_country_id = self.billing_country_id
 
     @api.model
     def _get_default_godowns(self):
@@ -166,9 +194,13 @@ class SaleOrderInherit(models.Model):
         string="Price Type",
         default='monthly')
     purchaser_name = fields.Many2one("res.partner", string='Purchaser Name',
-                                     domain="[('parent_id', '=', customer_branch),('category_id','ilike','purchaser'),('is_company','=', False)]")
-    purchaser_phone = fields.Char(string='Purchaser Contact Phone')
-    purchaser_email = fields.Char(string='Purchaser Email')
+                                     domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company','=', False)]")
+    #TODO:Select based on designation list
+    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact',
+                                        domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact',
+                                          domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+
     below_min_price = fields.Boolean('Below Min Price', default=False)
 
     otp = fields.Integer(string='OTP', store=False)
@@ -256,8 +288,10 @@ class SaleOrderInherit(models.Model):
     @api.onchange('purchaser_name')
     def get_purchaser_phone(self):
         if self.purchaser_name:
-            self.purchaser_phone = self.purchaser_name.phone
-            self.purchaser_email = self.purchaser_name.email
+            if not self.purchaser_name.phone:
+                raise ValidationError(_("Purchaser does not have Phone"))
+            if not self.purchaser_name.email:
+                raise ValidationError(_("Purchaser does not have Email"))
 
     @api.onchange('jobsite_id')
     def get_delivery_address(self):
@@ -292,6 +326,7 @@ class SaleOrderInherit(models.Model):
             self.billing_city = self.billing_addresses.city
             self.billing_state_id = self.billing_addresses.state_id
             self.billing_zip = self.billing_addresses.zip
+            self.billing_country_id = self.billing_addresses.country_id
 
     def verify_otp(self):
         otp = self._generate_otp()

@@ -15,7 +15,7 @@
 
     
     'category': 'Uncategorized',
-    'version': '2.1',
+    'version': '2.2',
 
     # any module necessary for this one to work correctly
     'depends': ['sale', 'jobsites'],

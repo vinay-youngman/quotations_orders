@@ -24,5 +24,6 @@
     'data': [
         'views/sale_order_form.xml',
         'report/sale_report_inherit.xml',
+        'security/ir.model.access.csv',
     ],
 }

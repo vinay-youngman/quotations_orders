@@ -139,7 +139,6 @@ class SaleOrderInherit(models.Model):
     pickup_date = fields.Date('Pickup Date')
 
     bill_submission = fields.Many2one('bill.submission', string='Bill Submission Process')
-    po_required = fields.Boolean('PO Required', default=False)
 
     @api.onchange('same_site_addr')
     def _onchange_same_site_addr(self):

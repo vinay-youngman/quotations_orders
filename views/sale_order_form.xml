@@ -8,15 +8,14 @@
             <field name="arch" type="xml">
 
                    <field name="partner_id" position="replace" >
-                            <field name="partner_id"/>
-                            <field name="customer_branch" attrs="{'invisible': [('tentative_quo', '=', True)]}" position="attributes">
-                                <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False, 'is_company': True, 'is_customer_branch': True}</attribute>
-                            </field>
+                            <field name="partner_id" options = "{'no_create': True}"/>
+                            <field name="customer_branch" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
 
-                            <field name="jobsite_id" position="attributes">
+
+                            <field name="jobsite_id" position="attributes" options = "{'no_create': True}">
                                 <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False}</attribute>
                             </field>
-                            <field name="godown"/>
+                            <field name="godown" options = "{'no_create': True}"/>
                             <field name="bill_godown" invisible="1"/>
 
                             <label for="delivery_street" string="Delivery Address"/>
@@ -34,12 +33,12 @@
                             <field name="freight_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="security_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="freight_paid_by" attrs="{'required': [('tentative_quo', '=', False)]}"/>
-                            <field name="bill_submission"/>
-                            <field name="bill_site_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
-                            <field name="bill_office_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <field name="bill_submission" options = "{'no_create': True}"/>
+                            <field name="bill_site_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
+                            <field name="bill_office_contact" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
 
                             <field name="same_site_addr"/>
-                            <label for="site_street" string="Site Address" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                            <label for="site_street" string="Site Address For Bill Submission" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
                             <div class="o_address_format" attrs="{'invisible': [('tentative_quo', '=', True)]}">
                                 <field name="site_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
                                 <field name="site_street2" placeholder="Street 2..." class="o_address_street"/>
@@ -48,6 +47,9 @@
                                 <field name="site_zip" placeholder="Pincode" class="o_address_zip"/>
                                 <field name="site_country_id" placeholder="Country" class="o_address_country" invisible="True" options='{"no_open": True, "no_create": True}'/>
                             </div>
+
+                           <field name="site_godown"/>
+
 
                             <field name="tentative_quo"/>
                             <field name="below_min_price"/>
@@ -77,14 +79,14 @@
                 </xpath>
 
                <xpath expr="//group[@name='order_details']" position="inside">
-                   <field name="purchaser_name"/>
+                   <field name="purchaser_name" options = "{'no_create': True}"/>
                    <field name="price_type" attrs="{'required': [('tentative_quo', '=', False)]}"/>
 
-                   <label for="billing_addresses" string="Billing Address"/>
+                   <label for="billing_addresses" string="Billing Address" />
                    <div class="o_address_format">
-                       <field name="billing_addresses" attrs="{'invisible': [('tentative_quo', '=', True)]}" position="attributes">
-                            <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False}</attribute>
-                        </field>
+                       <field name="billing_addresses" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
+
+
                        <field name="billing_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
                        <field name="billing_street2" placeholder="Street 2..." class="o_address_street"/>
                        <field name="billing_city" placeholder="City" class="o_address_city"/>
@@ -103,7 +105,7 @@
                    <field name="po_date"/>
 
                    <field name="same_office_addr"/>
-                   <label for="office_street" string="Office Address" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
+                   <label for="office_street" string="Office Address For Bill Submission" attrs="{'invisible': [('tentative_quo', '=', True)]}"/>
                     <div class="o_address_format" attrs="{'invisible': [('tentative_quo', '=', True)]}">
                         <field name="office_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
                         <field name="office_street2" placeholder="Street 2..." class="o_address_street"/>
@@ -113,7 +115,9 @@
                         <field name="office_country_id" placeholder="Country" class="o_address_country" invisible="True" options='{"no_open": True, "no_create": True}'/>
                     </div>
 
-                   <field name="place_of_supply"/>
+                   <field name="office_godown"/>
+
+                   <field name="place_of_supply" options = "{'no_create': True}"/>
 
 <!--                   <field name="amendment_doc"/>-->
 <!--                   <field name="released_at"/>-->

@@ -166,6 +166,8 @@ class SaleOrderInherit(models.Model):
         return godown
 
     godown = fields.Many2one("jobsite.godown", string='Godown', ondelete='restrict')
+    site_godown = fields.Many2one("jobsite.godown", string='Site Godown', ondelete='restrict')
+    office_godown = fields.Many2one("jobsite.godown", string='Office Godown', ondelete='restrict')
     bill_godown = fields.Many2one("jobsite.godown", string='Billing Godown', ondelete='restrict')
 
     delivery_date = fields.Date('Delivery Date')

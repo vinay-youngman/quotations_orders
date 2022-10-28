@@ -13,10 +13,12 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+
 class BillSubmission(models.Model):
     _name = 'bill.submission'
     _description = 'Bill Submission'
     name = fields.Char(string='Bill Submission', required=True)
+
 
 class ResPartnerInherited(models.Model):
     _inherit = 'res.partner'
@@ -42,11 +44,13 @@ class SaleOrderInherit(models.Model):
 
     jobsite_id = fields.Many2one('jobsite', string='Site Name')
     tentative_quo = fields.Boolean('Tentative Quotation', default=False)
-    partner_id = fields.Many2one(comodel_name='res.partner', domain="[('is_company', '=', True),('is_customer_branch', '=', False)]")
+    partner_id = fields.Many2one(comodel_name='res.partner',
+                                 domain="[('is_company', '=', True),('is_customer_branch', '=', False)]")
     validity_date = fields.Date(invisible=True)
     job_order = fields.Char(string="Job Order")
 
-    place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict', domain="[('country_id', '=', billing_country_id)]")
+    place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict',
+                                      domain="[('country_id', '=', billing_country_id)]")
     # amendment_doc = fields.Char(string="Amendment Doc")
     # released_at = fields.Datetime(string="Released At")
     # reason_of_release = fields.Selection([
@@ -59,10 +63,11 @@ class SaleOrderInherit(models.Model):
     remark = fields.Char(string="Remark")
 
     customer_branch = fields.Many2one(comodel_name='res.partner', string='Customer GSTs', domain="[('is_company', "
-                                                                                                   "'=', True), "
-                                                                                                   "('is_customer_branch', '=', True), ('parent_id', '=', partner_id)]")
+                                                                                                 "'=', True), "
+                                                                                                 "('is_customer_branch', '=', True), ('parent_id', '=', partner_id)]")
 
-    billing_addresses = fields.Many2one(comodel_name='res.partner', string='Billing Addresses', domain="[('is_company','=', False),('is_customer_branch', '=', False), ('parent_id', '=', customer_branch), ('type', '=', 'invoice')]")
+    billing_addresses = fields.Many2one(comodel_name='res.partner', string='Billing Addresses',
+                                        domain="[('is_company','=', False),('is_customer_branch', '=', False), ('parent_id', '=', customer_branch), ('type', '=', 'invoice')]")
     # @api.model
     # def _amount_all(self):
     #     super(SaleOrderInherit, self)._amount_all()
@@ -94,7 +99,6 @@ class SaleOrderInherit(models.Model):
     #         tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total, order.amount_untaxed, order.currency_id)
     #         order.tax_totals_json = json.dumps(tax_totals)
 
-
     po_number = fields.Char(string="PO Number")
     po_amount = fields.Char(string="PO Amount")
     po_date = fields.Date(string='PO Date')
@@ -105,32 +109,40 @@ class SaleOrderInherit(models.Model):
     billing_street = fields.Char(string="Billing Address")
     billing_street2 = fields.Char()
     billing_city = fields.Char()
-    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict', default=_get_default_country)
-    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict', domain="[('country_id', '=', billing_country_id)]")
+    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict',
+                                         default=_get_default_country)
+    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict',
+                                       domain="[('country_id', '=', billing_country_id)]")
     billing_zip = fields.Char(string='Billing Pincode', change_default=True)
 
     # Delivery Address
     delivery_street = fields.Char(string="Delivery Address")
     delivery_street2 = fields.Char()
     delivery_city = fields.Char()
-    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict',default=_get_default_country)
-    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',domain="[('country_id', '=', delivery_country_id)]")
+    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict',
+                                          default=_get_default_country)
+    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',
+                                        domain="[('country_id', '=', delivery_country_id)]")
     delivery_zip = fields.Char(string='Delivery Pincode', change_default=True)
 
     same_site_addr = fields.Boolean(default=False, string="Same as Delivery Address")
     site_street = fields.Char(string="Site Address")
     site_street2 = fields.Char()
     site_city = fields.Char()
-    site_country_id = fields.Many2one('res.country', string='Site Country', ondelete='restrict', default=_get_default_country)
-    site_state_id = fields.Many2one("res.country.state", string='Site State', ondelete='restrict', domain="[('country_id', '=', site_country_id)]")
+    site_country_id = fields.Many2one('res.country', string='Site Country', ondelete='restrict',
+                                      default=_get_default_country)
+    site_state_id = fields.Many2one("res.country.state", string='Site State', ondelete='restrict',
+                                    domain="[('country_id', '=', site_country_id)]")
     site_zip = fields.Char(string='Site Pincode', change_default=True)
 
     same_office_addr = fields.Boolean(default=False, string="Same as Billing Address")
     office_street = fields.Char(string="Office Address")
     office_street2 = fields.Char()
     office_city = fields.Char()
-    office_country_id = fields.Many2one('res.country', string='Office Country', ondelete='restrict', default=_get_default_country)
-    office_state_id = fields.Many2one("res.country.state", string='Office State', ondelete='restrict', domain="[('country_id', '=', office_country_id)]")
+    office_country_id = fields.Many2one('res.country', string='Office Country', ondelete='restrict',
+                                        default=_get_default_country)
+    office_state_id = fields.Many2one("res.country.state", string='Office State', ondelete='restrict',
+                                      domain="[('country_id', '=', office_country_id)]")
     office_zip = fields.Char(string='Office Pincode', change_default=True)
 
     email_to = fields.Char(string='Email To')
@@ -139,6 +151,8 @@ class SaleOrderInherit(models.Model):
     pickup_date = fields.Date('Pickup Date')
 
     bill_submission = fields.Many2one('bill.submission', string='Bill Submission Process')
+
+
 
     @api.onchange('same_site_addr')
     def _onchange_same_site_addr(self):
@@ -196,9 +210,73 @@ class SaleOrderInherit(models.Model):
         default='monthly')
     purchaser_name = fields.Many2one("res.partner", string='Purchaser Name',
                                      domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company','=', False)]")
-    #TODO:Select based on designation list
+    # TODO:Select based on designation list
+
+    @api.depends('bill_submission')
+    def _compute_hide(self):
+        if self.bill_submission.id is not False:
+            if self.bill_submission.name == 'Office(Purchase/Finance Sign)':
+                self.site_contact_hide = True
+                self.site_contact_address_hide = True
+                self.site_godown_hide = True
+                self.office_contact_hide = False
+                self.office_contact_address_hide = False
+                self.office_godown_hide = False
+
+            if self.bill_submission.name == 'Site(Project Manager/Site Incharge Sign)':
+                self.office_contact_hide = True
+                self.office_contact_address_hide = True
+                self.office_godown_hide = True
+                self.site_contact_hide = False
+                self.site_contact_address_hide = False
+                self.site_godown_hide = False
+
+            if self.bill_submission.name == 'Email':
+                self.site_contact_hide = False
+                self.site_contact_address_hide = True
+                self.site_godown_hide = True
+                self.office_contact_address_hide = True
+                self.office_godown_hide = True
+                self.office_contact_hide = True
+
+            if self.bill_submission.name == 'Courier':
+                self.site_contact_hide = False
+                self.site_contact_address_hide = False
+                self.site_godown_hide = True
+                self.office_contact_address_hide = True
+                self.office_godown_hide = True
+                self.office_contact_hide = True
+
+            if self.bill_submission.name == 'Site(Project Manager/Site Incharge Sign) + Office(Purchase/Finance Sign)':
+                self.office_contact_hide = False
+                self.office_contact_address_hide = False
+                self.office_godown_hide = False
+                self.site_contact_hide = False
+                self.site_contact_address_hide = False
+                self.site_godown_hide = False
+
+            if self.bill_submission.name == 'Special Process:Online ASN/GRN Process':
+                self.office_contact_hide = False
+                self.office_contact_address_hide = True
+                self.office_godown_hide = True
+                self.site_contact_hide = False
+                self.site_contact_address_hide = True
+                self.site_godown_hide = True
+
+
+    site_contact_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+    site_contact_address_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+    site_godown_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+
+    office_contact_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+    office_contact_address_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+    office_godown_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
+
+
     bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact',
                                         domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+
+
     bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact',
                                           domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
 
@@ -224,7 +302,7 @@ class SaleOrderInherit(models.Model):
     def _amount_all(self):
         super(SaleOrderInherit, self)._amount_all()
         for order in self:
-            #TODO: get tax rate from config
+            # TODO: get tax rate from config
             tax_rate = 0.28
 
             amount_untaxed = order.amount_untaxed + order.freight_amount
@@ -247,15 +325,18 @@ class SaleOrderInherit(models.Model):
 
         account_move = self.env['account.move']
         for order in self:
-            tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line, compute_taxes)
+            tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line,
+                                                                                         compute_taxes)
 
-            tax_lines_data.append({'line_key': "tax_line_NewId_'virtual_0'_24", "tax_amount": order.freight_amount * 0.28, "tax": self.env['account.tax'].sudo().search([('id', '=', '24')])})
-            tax_lines_data.append({'line_key': "base_line_NewId_'virtual_0'", "base_amount": order.freight_amount, "tax": self.env['account.tax'].sudo().search([('id', '=', '24')])})
+            tax_lines_data.append(
+                {'line_key': "tax_line_NewId_'virtual_0'_24", "tax_amount": order.freight_amount * 0.28,
+                 "tax": self.env['account.tax'].sudo().search([('id', '=', '24')])})
+            tax_lines_data.append({'line_key': "base_line_NewId_'virtual_0'", "base_amount": order.freight_amount,
+                                   "tax": self.env['account.tax'].sudo().search([('id', '=', '24')])})
 
             tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total,
                                                       order.amount_untaxed, order.currency_id)
             order.tax_totals_json = json.dumps(tax_totals)
-
 
     # @api.model
     # def create(self, vals):
@@ -316,7 +397,8 @@ class SaleOrderInherit(models.Model):
             self.billing_zip = False
             self.billing_country_id = False
 
-        if ((self.partner_id) and (self.tentative_quo is False)) and ((self.partner_id.is_company is False) or (self.partner_id.is_customer_branch is True)):
+        if ((self.partner_id) and (self.tentative_quo is False)) and (
+                (self.partner_id.is_company is False) or (self.partner_id.is_customer_branch is True)):
             raise ValidationError(_("Please select a Company"))
 
     @api.onchange('billing_addresses')
@@ -380,14 +462,12 @@ class SaleOrderInherit(models.Model):
         return code[:6]
 
 
-
 class ProductTemplateInherit(models.Model):
     _name = 'product.template'
     _inherit = 'product.template'
 
     detailed_type = fields.Selection(default='service', readonly=True)
     invoice_policy = fields.Selection(default='delivery', readonly=True)
-
 
     status = fields.Selection([
         ('0', 'ACTIVE'),
@@ -413,9 +493,10 @@ class ProductTemplateInherit(models.Model):
     supplier = fields.Char(string="Supplier")
     standard_price = fields.Float(
         'Estimate Value', company_dependent=True, digits=(12, 2),
-        groups="base.group_user",)
+        groups="base.group_user", )
     list_price = fields.Float('Rental Price')
     default_code = fields.Char(string="Product Code")
+
 
 class SaleOrderLineInherit(models.Model):
     _inherit = 'sale.order.line'

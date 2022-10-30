@@ -1,29 +1,26 @@
 # -*- coding: utf-8 -*-
+
 {
-    'name': "quotations_orders",
-
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
+    'name': "Quotations & Orders",
+    'version': '2.2',
+    'category': 'Sales/CRM',
+    'summary': 'It provides modification in SalesOrder Module.',
     'description': """
-        Long description of module's purpose
+        Provides Quotations & Orders Modifications
     """,
-
     'author': "Ajay",
     'website': "https://www.youngman.co.in/",
+    'sequence': -100,
 
-    
-    'category': 'Uncategorized',
-    'version': '2.2',
+    'depends': ['sale_management', 'sale', 'jobsites', 'youngman_customers'],
 
-    # any module necessary for this one to work correctly
-    'depends': ['sale', 'jobsites'],
-
-    # always loaded
     'data': [
         'views/sale_order_form.xml',
         'report/sale_report_inherit.xml',
         'security/ir.model.access.csv',
     ],
+
+    'application': True,
+    'installable': True,
+    'auto_install': False,
 }

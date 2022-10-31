@@ -16,6 +16,7 @@
                                 <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False}</attribute>
                             </field>
                             <field name="godown" options = "{'no_create': True}"/>
+                            <field name="beta_quot_id" invisible="1" />
                             <field name="bill_godown" invisible="1"/>
 
                             <label for="delivery_street" string="Delivery Address"/>

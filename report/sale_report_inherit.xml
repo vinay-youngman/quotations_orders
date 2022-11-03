@@ -67,7 +67,12 @@
 		</xpath>
 
 		<xpath expr="//div[@id='informations']" position="replace">
+		</xpath>
 
+		<xpath expr="//th[@name='th_taxes']" position="replace">
+		</xpath>
+
+		<xpath expr="//td[@name='td_taxes']" position="replace">
 		</xpath>
 
 		<xpath expr="//p[@id='fiscal_position_remark']" position="after">
@@ -123,7 +128,7 @@
 				<p style="text-align:justify"><strong>One Month Advance</strong> is required and will be adjusted against the last bill of rental.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">Damage and Missing Policy seperately mentioned below shall be applicable.</p>
+				<p style="text-align:justify">Damage and Missing Policy separately mentioned below shall be applicable.</p>
 				</li>
 				<li>
 				<p style="text-align:justify">If Material has to be delivered to any floor where lift facility is not available extra loading and/or unloading charges of INR 300 per meter for delivery from 1st Floor to 5th Floor and INR 500 per meter for delivery above 5th floor shall be applicable.</p>
@@ -137,11 +142,11 @@
 				<p style="text-align:justify">In case of Cheque collection charges @ 500 + GST and also cheque bounce charges shall be 500 + 18% GST.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">Kindly issue Non Dated cheque / BG / Payment for rental material as a security deposit of not less than !total estimate value of quote!</p>
+				<p style="text-align:justify">Kindly issue Non-Dated cheque / BG / Payment for rental material as a security deposit of not less than !total estimate value of quote!</p>
 				</li>
-				<li>
-				<p style="text-align:justify">The cheque must be in multiple of 49000.</p>
-				</li>
+<!--				<li>-->
+<!--				<p style="text-align:justify">The cheque must be in multiple of 49000.</p>-->
+<!--				</li>-->
 				<li>
 				<p style="text-align:justify">In case of default of PO payment terms, then Youngman India shall be authorised to adjust the security provided by you to clear the liability and forcefully take custody of material.</p>
 				</li>
@@ -165,17 +170,17 @@
 				<li>
 				<p style="text-align:justify">Section 16 of the MSMED Act provides that in case buyer fails to make payment of amount to the MSME supplier, then the buyer shall be liable to pay compound interest with monthly rest to such supplier. This provision has an overriding effect on the agreement, if any, between the buyer and the MSME supplier.</p>
 
-				<p style="text-align:justify">Further, Section 17 of MSMED Act provides that for goods supplied or services rendered bythe MSME supplier, the buyer shall be liable to pay amount with interest thereon as provided under Section 16.</p>
+				<p style="text-align:justify">Further, Section 17 of MSMED Act provides that for goods supplied or services rendered by the MSME supplier, the buyer shall be liable to pay amount with interest thereon as provided under Section 16.</p>
 
 				<p style="text-align:justify">Section 16 of the MSMED Act provides that the buyer shall be liable to pay compound interest with monthly rest to the MSME supplier at three times the bank rate notified by the RBI.</p>
 				</li>
 				<li>
 				<p style="text-align:justify">Invoices shall be made on every first day of the next month for the month closing, and shall be sent over by email to your registered email address same day.</p>
 
-				<p style="text-align:justify">Mid month clsoure invoices shall be sent over email within 1-2 days of pickup.</p>
+				<p style="text-align:justify">Mid month closure invoices shall be sent over email within 1-2 days of pickup.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">Account Managers shall also submit in voices, but in case if account manager is not able to submit the invoice, e-copyiswellvalidand can be used for GST claims</p>
+				<p style="text-align:justify">Account Managers shall also submit invoices, but in case if account manager is not able to submit the invoice, e-copy is valid as well and can be used for GST claims</p>
 				</li>
 				<li>
 				<p style="text-align:justify">If any discrepancy is found in the invoice, please reply to the invoice email and same shall be rectified within 24 hours.</p>
@@ -208,7 +213,7 @@
 				<p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order, and in any case if they disagree they have to explicitly mention the same at time of placing order in a written format.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">In case of non payment, Youngman has the right to utilize the security for settling the amount.</p>
+				<p style="text-align:justify">In case of non-payment, Youngman has the right to utilize the security for settling the amount.</p>
 				</li>
 				<li>
 				<p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>

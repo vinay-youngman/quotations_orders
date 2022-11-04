@@ -120,10 +120,10 @@
 				<li>
 				<p style="text-align:justify">Kindly issue a formal <strong>Work Order</strong> in the name of</p>
 				</li>
-				<li>
-				<p style="text-align:justify"><strong><span t-field="doc.bill_godown.name"/></strong><br />
-				<strong><span t-field="doc.bill_godown.address"/></strong></p>
-				</li>
+<!--				<li>-->
+<!--				<p style="text-align:justify"><strong><span t-field="doc.bill_godown.name"/></strong><br />-->
+<!--				<strong><span t-field="doc.bill_godown.address"/></strong></p>-->
+<!--				</li>-->
 				<li>
 				<p style="text-align:justify"><strong>One Month Advance</strong> is required and will be adjusted against the last bill of rental.</p>
 				</li>
@@ -137,12 +137,12 @@
 				<p style="text-align:justify">YIPL reserves all rights of pickup of material in case of any Invoice payment default and customer shall support in process of pickup.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">We support Online payment via, Netbanking.</p>
+				<p style="text-align:justify">We support Online payment via Netbanking.</p>
 
 				<p style="text-align:justify">In case of Cheque collection charges @ 500 + GST and also cheque bounce charges shall be 500 + 18% GST.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">Kindly issue Non-Dated cheque / BG / Payment for rental material as a security deposit of not less than !total estimate value of quote!</p>
+				<p style="text-align:justify">Kindly issue Non-Dated cheque / BG / Payment for rental material as a security deposit of not less than the total estimate value of quote!</p>
 				</li>
 <!--				<li>-->
 <!--				<p style="text-align:justify">The cheque must be in multiple of 49000.</p>-->

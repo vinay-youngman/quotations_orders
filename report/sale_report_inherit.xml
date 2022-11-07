@@ -90,12 +90,12 @@
 						  </ol>
 						</td>
 					</tr>
-					<tr>
-					  <th id= "t1" style="width: 336.5px; font-size: 16px; text-align:center">
-					  Taxes extra as per prevailing GST regime
-					</th>
-					  <td id= "d1" style = "width: 336.5px; font-size: 14px;"></td>
-					</tr>
+<!--					<tr>-->
+<!--					  <th id= "t1" style="width: 336.5px; font-size: 16px; text-align:center">-->
+<!--					  Taxes extra as per prevailing GST regime-->
+<!--					</th>-->
+<!--					  <td id= "d1" style = "width: 336.5px; font-size: 14px;"></td>-->
+<!--					</tr>-->
 					<tr>
 					  <th id= "t1" style="width: 336.5px; font-size: 16px; text-align:center">
 					  Payment Methods
@@ -207,7 +207,7 @@
 				<p style="text-align:justify">At the time of delivery of material, material checklist is signed by your representative and can be used at time of pickup to justify if any claims are fair or not.</p>
 				</li>
 				<li>
-					<p style="text-align:justify">Damage Policy &amp; Price: <u><a>https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</a></u><br/> Missing Policy &amp; Price: <u><a>https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</a></u></p>
+					<p style="text-align:justify">Damage Policy &amp; Price: <u><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf">https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</a></u><br/> Missing Policy &amp; Price: <u><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf">https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</a></u></p>
 				</li>
 				<li>
 				<p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order, and in any case if they disagree they have to explicitly mention the same at time of placing order in a written format.</p>

@@ -189,7 +189,7 @@
 				<p style="text-align:justify">Credit limit and credit days have to be maintained in strict accordance and agreement and failure to do so shall also reflect in our service level downgrades.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">For Rental closure, a formal written communication will only be accepted by your registered email ID to <u><span t-field="doc.partner_id.account_receivable.login"/><br/></u>, <u><span t-field="doc.partner_id.user_id.email"/><br/></u>, <u>receivable@youngman.co.in</u> and <u>arai@youngman.co.in</u> .</p>
+				<p style="text-align:justify">For Rental closure, a formal written communication will only be accepted by your registered email ID to <u><span t-field="doc.partner_id.account_receivable.login"/></u>, <u><span t-field="doc.partner_id.user_id.email"/></u>, <u>receivable@youngman.co.in</u> and <u>arai@youngman.co.in</u> .</p>
 				</li>
 				<li>
 				<p style="text-align:justify">If, within 30 (30) days of receipt of the Bill, the Customer does not notify YIPL in writing of a dispute related to the Bill, the Customer shall be deemed to have waived any dispute related to the Bill and the Bill shall be considered correct and complete. In case of any dispute including dispute of non-payment in respect of any Bill raised by YIPL, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
@@ -207,7 +207,7 @@
 				<p style="text-align:justify">At the time of delivery of material, material checklist is signed by your representative and can be used at time of pickup to justify if any claims are fair or not.</p>
 				</li>
 				<li>
-					<p style="text-align:justify">Damage Policy &amp; Price: <u>https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</u>> Missing Policy &amp; Price: <u>https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</u></p>
+					<p style="text-align:justify">Damage Policy &amp; Price: <u><a>https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</a></u><br/> Missing Policy &amp; Price: <u><a>https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</a></u></p>
 				</li>
 				<li>
 				<p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order, and in any case if they disagree they have to explicitly mention the same at time of placing order in a written format.</p>

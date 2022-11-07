@@ -214,6 +214,13 @@ class SaleOrderInherit(models.Model):
 
     @api.depends('bill_submission')
     def _compute_hide(self):
+        self.site_contact_hide = True
+        self.site_contact_address_hide = True
+        self.site_godown_hide = True
+        self.office_contact_hide = True
+        self.office_contact_address_hide = True
+        self.office_godown_hide = True
+
         if self.bill_submission.id is not False:
             if self.bill_submission.name == 'Office(Purchase/Finance Sign)':
                 self.site_contact_hide = True
@@ -460,6 +467,32 @@ class SaleOrderInherit(models.Model):
         code = str(code * 1000000)
 
         return code[:6]
+
+
+    def _get_nearest_godown(self, pincode):
+        endpoint = self.env['ir.config_parameter'].sudo().get_param('ym_configs.nearest_godown_endpoint') + str(pincode)
+        try:
+            response = requests.get(endpoint, verify=False)
+            return response.json()
+        except requests.HTTPError:
+            error_msg = _("Could not fetch nearest Godown. Remote server returned status ???")
+            raise self.env['res.config.settings'].get_config_warning(error_msg)
+        except Exception as e:
+            error_msg = _("Some error occurred while fetching nearest Godown")
+            raise self.env['res.config.settings'].get_config_warning(error_msg)
+        finally:
+            traceback.format_exc()
+
+    @api.onchange('site_zip','office_zip')
+    def sendToBetaa(self):
+        if (self.site_zip != False):
+            nearest_godown = self._get_nearest_godown(self.site_zip)
+            godown_names = [entry['godown_name'] for entry in nearest_godown]
+            self.site_godown = self.env['jobsite.godown'].sudo().search([('name', '=', godown_names[0])])
+        elif(self.office_zip != False):
+            nearest_godown = self._get_nearest_godown(self.office_zip)
+            godown_names = [entry['godown_name'] for entry in nearest_godown]
+            self.office_godown = self.env['jobsite.godown'].sudo().search([('name', '=', godown_names[0])])
 
 
 class ProductTemplateInherit(models.Model):

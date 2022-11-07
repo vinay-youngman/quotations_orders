@@ -2,69 +2,69 @@
 <odoo>
     <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
 		<xpath expr="//t[@t-set='address']" position="replace"/>
-		<xpath expr="//h2[@class='mt16']" position="replace">
-			<div class="row">
-				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
-			</div>
+<!--		<xpath expr="//h2[@class='mt16']" position="replace">-->
+<!--			<div class="row">-->
+<!--				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>-->
+<!--			</div>-->
 
-			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
-				<tr>
-					<td><strong>CUSTOMER NAME</strong></td>
-					<td><span t-field="doc.partner_id.name"/></td>
-				</tr>
-				<tr>
-					<td><strong>PICKUP DATE</strong></td>
-					<td><span t-field="doc.pickup_date"/></td>
-				</tr>
-				<tr>
-					<td><strong>SUB CUSTOMER GST</strong></td>
-					<td><span t-field="doc.customer_branch.gstn"/></td>
-				</tr>
-				<tr>
-					<td><strong>QUOTATION NUMBER</strong></td>
-					<td><span t-field="doc.name"/></td>
-				</tr>
-				<tr>
-					<td><strong>QUOTATION DATE</strong></td>
-					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
-				</tr>
-			</table><br/>
+<!--			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">-->
+<!--				<tr>-->
+<!--					<td><strong>CUSTOMER NAME</strong></td>-->
+<!--					<td><span t-field="doc.partner_id.name"/></td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<td><strong>PICKUP DATE</strong></td>-->
+<!--					<td><span t-field="doc.pickup_date"/></td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<td><strong>SUB CUSTOMER GST</strong></td>-->
+<!--					<td><span t-field="doc.customer_branch.gstn"/></td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<td><strong>QUOTATION NUMBER</strong></td>-->
+<!--					<td><span t-field="doc.name"/></td>-->
+<!--				</tr>-->
+<!--				<tr>-->
+<!--					<td><strong>QUOTATION DATE</strong></td>-->
+<!--					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>-->
+<!--				</tr>-->
+<!--			</table><br/>-->
 
-                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
-			<table id="quotation_tab" class="table table-sm o_main_table">
-				<thead style="display: table-row-group">
-                    <tr>
-                        <th name="th_kind_attention" class="text-left"><b>KIND ATTENTION</b></th>
-                        <th name="th_delivery_addr" class="text-left"><b>DELIVERY ADDRESS</b></th>
-                        <th name="th_billing_addr" class="text-left"><b>BILLING ADDRESS</b></th>
-                    </tr>
-                </thead>
-                <tbody class="sale_tbody">
-					<tr>
-						<td name="td_kind_attention">
-							<span t-field="doc.purchaser_name.name"/><br/>
-<!--							<span t-field="doc.partner_id.street"/>-->
-<!--							<span t-field="doc.partner_id.street2"/>-->
-<!--							<span t-field="doc.partner_id.zip"/>-->
-						</td>
-						<td name="td_delivery_addr">
-							<span t-field="doc.delivery_street"/>
-							<span t-field="doc.delivery_street2"/>
-							<span t-field="doc.delivery_city"/>
-							<span t-field="doc.delivery_state_id.name"/>
-							<span t-field="doc.delivery_zip"/>
-						</td>
-						<td name="td_billing_addr">
-							<span t-field="doc.billing_street"/>
-							<span t-field="doc.billing_street2"/>
-							<span t-field="doc.billing_city"/>
-							<span t-field="doc.billing_state_id.name"/>
-							<span t-field="doc.billing_zip"/>
-						</td>
-					</tr>
-                </tbody>
-            </table>
-		</xpath>
+<!--                &lt;!&ndash; In case we want to repeat the header, remove "display: table-row-group" &ndash;&gt;-->
+<!--			<table id="quotation_tab" class="table table-sm o_main_table">-->
+<!--				<thead style="display: table-row-group">-->
+<!--                    <tr>-->
+<!--                        <th name="th_kind_attention" class="text-left"><b>KIND ATTENTION</b></th>-->
+<!--                        <th name="th_delivery_addr" class="text-left"><b>DELIVERY ADDRESS</b></th>-->
+<!--                        <th name="th_billing_addr" class="text-left"><b>BILLING ADDRESS</b></th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody class="sale_tbody">-->
+<!--					<tr>-->
+<!--						<td name="td_kind_attention">-->
+<!--							<span t-field="doc.purchaser_name.name"/><br/>-->
+<!--&lt;!&ndash;							<span t-field="doc.partner_id.street"/>&ndash;&gt;-->
+<!--&lt;!&ndash;							<span t-field="doc.partner_id.street2"/>&ndash;&gt;-->
+<!--&lt;!&ndash;							<span t-field="doc.partner_id.zip"/>&ndash;&gt;-->
+<!--						</td>-->
+<!--						<td name="td_delivery_addr">-->
+<!--							<span t-field="doc.delivery_street"/>-->
+<!--							<span t-field="doc.delivery_street2"/>-->
+<!--							<span t-field="doc.delivery_city"/>-->
+<!--							<span t-field="doc.delivery_state_id.name"/>-->
+<!--							<span t-field="doc.delivery_zip"/>-->
+<!--						</td>-->
+<!--						<td name="td_billing_addr">-->
+<!--							<span t-field="doc.billing_street"/>-->
+<!--							<span t-field="doc.billing_street2"/>-->
+<!--							<span t-field="doc.billing_city"/>-->
+<!--							<span t-field="doc.billing_state_id.name"/>-->
+<!--							<span t-field="doc.billing_zip"/>-->
+<!--						</td>-->
+<!--					</tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--		</xpath>-->
 
 		<xpath expr="//div[@id='informations']" position="replace">
 		</xpath>
@@ -120,10 +120,10 @@
 				<li>
 				<p style="text-align:justify">Kindly issue a formal <strong>Work Order</strong> in the name of</p>
 				</li>
-<!--				<li>-->
-<!--				<p style="text-align:justify"><strong><span t-field="doc.bill_godown.name"/></strong><br />-->
-<!--				<strong><span t-field="doc.bill_godown.address"/></strong></p>-->
-<!--				</li>-->
+				<li>
+				<p style="text-align:justify"><strong><span t-field="doc.bill_godown.name"/></strong><br />
+				<strong><span t-field="doc.bill_godown.address"/></strong></p>
+				</li>
 				<li>
 				<p style="text-align:justify"><strong>One Month Advance</strong> is required and will be adjusted against the last bill of rental.</p>
 				</li>

@@ -210,6 +210,8 @@ class SaleOrderInherit(models.Model):
         default='monthly')
     purchaser_name = fields.Many2one("res.partner", string='Purchaser Name',
                                      domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company','=', False)]")
+    site_contact_name = fields.Many2one("res.partner", string='Site Contact Name',
+                                     domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
     # TODO:Select based on designation list
 
     @api.depends('bill_submission')
@@ -281,11 +283,11 @@ class SaleOrderInherit(models.Model):
 
 
     bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact',
-                                        domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+                                        domain="[('is_company','=', False), ('parent_id', '=', partner_id), ('category_id','ilike','site contact')]")
 
 
     bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact',
-                                          domain="[('is_company','=', False), ('parent_id', '=', partner_id)]")
+                                          domain="[('is_company','=', False), ('parent_id', '=', partner_id),('category_id','ilike','office contact')]")
 
     below_min_price = fields.Boolean('Below Min Price', default=False)
 

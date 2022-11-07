@@ -210,9 +210,11 @@ class SaleOrderInherit(models.Model):
         default='monthly')
     purchaser_name = fields.Many2one("res.partner", string='Purchaser Name',
                                      domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company','=', False)]")
+
     site_contact_name = fields.Many2one("res.partner", string='Site Contact Name',
                                      domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
     # TODO:Select based on designation list
+
 
     @api.depends('bill_submission')
     def _compute_hide(self):

@@ -18,7 +18,7 @@
 				</tr>
 				<tr>
 					<td><strong>SUB CUSTOMER GST</strong></td>
-					<td><span t-field="doc.partner_id.vat"/></td>
+					<td><span t-field="doc.customer_branch.gstn"/></td>
 				</tr>
 				<tr>
 					<td><strong>QUOTATION NUMBER</strong></td>

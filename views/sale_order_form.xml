@@ -52,7 +52,7 @@
                             <field name="same_site_addr" attrs="{'invisible': [('site_contact_address_hide', '=', True)]}"/>
                             <label for="site_street" string="Site Address For Bill Submission" attrs="{'invisible': [('site_contact_address_hide', '=', True)]}"/>
                             <div class="o_address_format" attrs="{'invisible': [('site_contact_address_hide', '=', True)]}">
-                                <field name="site_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
+                                <field name="site_street"  placeholder="Street..." class="o_address_street"/>
                                 <field name="site_street2" placeholder="Street 2..." class="o_address_street"/>
                                 <field name="site_city" placeholder="City" class="o_address_city"/>
                                 <field name="site_state_id" placeholder="State" class="o_address_state" options="{'no_open': True, 'no_create': True}"/>
@@ -119,7 +119,7 @@
                    <field name="same_office_addr" attrs="{'invisible': [('office_contact_address_hide', '=', True)]}"/>
                    <label for="office_street" string="Office Address For Bill Submission" attrs="{'invisible': [('office_contact_address_hide', '=', True)]}"/>
                     <div class="o_address_format" attrs="{'invisible': [('office_contact_address_hide', '=', True)]}">
-                        <field name="office_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
+                        <field name="office_street"  placeholder="Street..." class="o_address_street"/>
                         <field name="office_street2" placeholder="Street 2..." class="o_address_street"/>
                         <field name="office_city" placeholder="City" class="o_address_city"/>
                         <field name="office_state_id" placeholder="State" class="o_address_state" options="{'no_open': True, 'no_create': True}"/>

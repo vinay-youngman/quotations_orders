@@ -92,6 +92,7 @@
 
                <xpath expr="//group[@name='order_details']" position="inside">
                    <field name="purchaser_name" options = "{'no_create': True}"/>
+                   <field name="site_contact_name" options = "{'no_create': True}"/>
                    <field name="price_type" attrs="{'required': [('tentative_quo', '=', False)]}"/>
 
                    <label for="billing_addresses" string="Billing Address" />

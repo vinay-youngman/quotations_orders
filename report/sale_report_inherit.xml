@@ -1,83 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
-<!--		<div t-attf-class="o_company_#{company.id}_layout header" t-att-style="report_header_style">-->
-<!--            <div class="o_background_header">-->
-<!--            <div class="float-right">-->
-<!--                <h3 class="mt0 text-right" t-field="company.report_header"/>-->
-<!--            </div>-->
-<!--            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="float-left" alt="Logo"/>-->
-<!--            <div class="float-left company_address">-->
-<!--                <span t-if="company.company_details" t-field="company.company_details"></span>-->
-<!--            </div>-->
-<!--            <div class="clearfix mb8"/>-->
-<!--            </div>-->
-<!--        </div>-->
-
 		<xpath expr="//t[@t-set='address']" position="replace"/>
-<!--		<xpath expr="//h2[@class='mt16']" position="replace">-->
-<!--			<div class="row">-->
-<!--				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>-->
-<!--			</div>-->
+		<xpath expr="//h2[@class='mt16']" position="replace">
+			<div class="row">
+				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
+			</div>
 
-<!--			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">-->
-<!--				<tr>-->
-<!--					<td><strong>CUSTOMER NAME</strong></td>-->
-<!--					<td><span t-field="doc.partner_id.name"/></td>-->
-<!--				</tr>-->
-<!--				<tr>-->
-<!--					<td><strong>PICKUP DATE</strong></td>-->
-<!--					<td><span t-field="doc.pickup_date"/></td>-->
-<!--				</tr>-->
-<!--				<tr>-->
-<!--					<td><strong>SUB CUSTOMER GST</strong></td>-->
-<!--					<td><span t-field="doc.customer_branch.gstn"/></td>-->
-<!--				</tr>-->
-<!--				<tr>-->
-<!--					<td><strong>QUOTATION NUMBER</strong></td>-->
-<!--					<td><span t-field="doc.name"/></td>-->
-<!--				</tr>-->
-<!--				<tr>-->
-<!--					<td><strong>QUOTATION DATE</strong></td>-->
-<!--					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>-->
-<!--				</tr>-->
-<!--			</table><br/>-->
+			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+				<tr>
+					<td><strong>CUSTOMER NAME</strong></td>
+					<td><span t-field="doc.partner_id.name"/></td>
+				</tr>
+				<tr>
+					<td><strong>PICKUP DATE</strong></td>
+					<td><span t-field="doc.pickup_date"/></td>
+				</tr>
+				<tr>
+					<td><strong>SUB CUSTOMER GST</strong></td>
+					<td><span t-field="doc.customer_branch.gstn"/></td>
+				</tr>
+				<tr>
+					<td><strong>QUOTATION NUMBER</strong></td>
+					<td><span t-field="doc.name"/></td>
+				</tr>
+				<tr>
+					<td><strong>QUOTATION DATE</strong></td>
+					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
+				</tr>
+			</table><br/>
 
-<!--                &lt;!&ndash; In case we want to repeat the header, remove "display: table-row-group" &ndash;&gt;-->
-<!--			<table id="quotation_tab" class="table table-sm o_main_table">-->
-<!--				<thead style="display: table-row-group">-->
-<!--                    <tr>-->
-<!--                        <th name="th_kind_attention" class="text-left"><b>KIND ATTENTION</b></th>-->
-<!--                        <th name="th_delivery_addr" class="text-left"><b>DELIVERY ADDRESS</b></th>-->
-<!--                        <th name="th_billing_addr" class="text-left"><b>BILLING ADDRESS</b></th>-->
-<!--                    </tr>-->
-<!--                </thead>-->
-<!--                <tbody class="sale_tbody">-->
-<!--					<tr>-->
-<!--						<td name="td_kind_attention">-->
-<!--							<span t-field="doc.purchaser_name.name"/><br/>-->
-<!--&lt;!&ndash;							<span t-field="doc.partner_id.street"/>&ndash;&gt;-->
-<!--&lt;!&ndash;							<span t-field="doc.partner_id.street2"/>&ndash;&gt;-->
-<!--&lt;!&ndash;							<span t-field="doc.partner_id.zip"/>&ndash;&gt;-->
-<!--						</td>-->
-<!--						<td name="td_delivery_addr">-->
-<!--							<span t-field="doc.delivery_street"/>-->
-<!--							<span t-field="doc.delivery_street2"/>-->
-<!--							<span t-field="doc.delivery_city"/>-->
-<!--							<span t-field="doc.delivery_state_id.name"/>-->
-<!--							<span t-field="doc.delivery_zip"/>-->
-<!--						</td>-->
-<!--						<td name="td_billing_addr">-->
-<!--							<span t-field="doc.billing_street"/>-->
-<!--							<span t-field="doc.billing_street2"/>-->
-<!--							<span t-field="doc.billing_city"/>-->
-<!--							<span t-field="doc.billing_state_id.name"/>-->
-<!--							<span t-field="doc.billing_zip"/>-->
-<!--						</td>-->
-<!--					</tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--		</xpath>-->
+                <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+			<table id="quotation_tab" class="table table-sm o_main_table">
+				<thead style="display: table-row-group">
+                    <tr>
+                        <th name="th_kind_attention" class="text-left"><b>Kind Attention</b></th>
+                        <th name="th_delivery_addr" class="text-left"><b>Delivery Address</b></th>
+                        <th name="th_billing_addr" class="text-left"><b>Billing Address</b></th>
+                    </tr>
+                </thead>
+                <tbody class="sale_tbody">
+					<tr>
+						<td name="td_kind_attention">
+							<span t-field="doc.purchaser_name.name"/><br/>
+<!--							<span t-field="doc.partner_id.street"/>-->
+<!--							<span t-field="doc.partner_id.street2"/>-->
+<!--							<span t-field="doc.partner_id.zip"/>-->
+						</td>
+						<td name="td_delivery_addr">
+							<span t-field="doc.delivery_street"/>
+							<span t-field="doc.delivery_street2"/>
+							<span t-field="doc.delivery_city"/>
+							<span t-field="doc.delivery_state_id.name"/>
+							<span t-field="doc.delivery_zip"/>
+						</td>
+						<td name="td_billing_addr">
+							<span t-field="doc.billing_street"/>
+							<span t-field="doc.billing_street2"/>
+							<span t-field="doc.billing_city"/>
+							<span t-field="doc.billing_state_id.name"/>
+							<span t-field="doc.billing_zip"/>
+						</td>
+					</tr>
+                </tbody>
+            </table>
+		</xpath>
 
 		<xpath expr="//div[@id='informations']" position="replace">
 		</xpath>
@@ -119,7 +106,7 @@
 					<br/>Account Name: Youngman India Pvt. Ltd.
 					<br/>Bank Account No: 50200062226670
 					<br/>Bank IFSC Code: HDFC0002845
-					<br/>Branch Address: HDFC Omega Branch , Greater-noida</li>
+					<br/>Branch Address: HDFC Omega Branch, Greater-noida</li>
 					</ol>
 					</td>
 					</tr>

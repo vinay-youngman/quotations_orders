@@ -2,7 +2,7 @@
 
 {
     'name': "Quotations & Orders",
-    'version': '2.3',
+    'version': '2.5',
     'category': 'Sales/CRM',
     'summary': 'It provides modification in SalesOrder Module.',
     'description': """

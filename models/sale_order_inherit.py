@@ -62,7 +62,7 @@ class SaleOrderInherit(models.Model):
     # part_pickup = fields.Boolean(string="Part Pickup", default=False)
     remark = fields.Char(string="Remark")
 
-    customer_branch = fields.Many2one(comodel_name='res.partner', string='Customer GSTs', domain="[('is_company', "
+    customer_branch = fields.Many2one(comodel_name='res.partner', string='Branch Name', domain="[('is_company', "
                                                                                                  "'=', True), "
                                                                                                  "('is_customer_branch', '=', True), ('parent_id', '=', partner_id)]")
 
@@ -103,6 +103,7 @@ class SaleOrderInherit(models.Model):
     po_amount = fields.Char(string="PO Amount")
     po_date = fields.Date(string='PO Date')
 
+
     beta_quot_id = fields.Integer()
 
     # Billing Address
@@ -125,44 +126,13 @@ class SaleOrderInherit(models.Model):
                                         domain="[('country_id', '=', delivery_country_id)]")
     delivery_zip = fields.Char(string='Delivery Pincode', change_default=True)
 
-    same_site_addr = fields.Boolean(default=False, string="Same as Delivery Address")
-    site_street = fields.Char(string="Site Address")
-    site_street2 = fields.Char()
-    site_city = fields.Char()
     site_country_id = fields.Many2one('res.country', string='Site Country', ondelete='restrict',
                                       default=_get_default_country)
-    site_state_id = fields.Many2one("res.country.state", string='Site State', ondelete='restrict',
-                                    domain="[('country_id', '=', site_country_id)]")
     site_zip = fields.Char(string='Site Pincode', change_default=True)
 
-    same_office_addr = fields.Boolean(default=False, string="Same as Billing Address")
-    office_street = fields.Char(string="Office Address")
-    office_street2 = fields.Char()
-    office_city = fields.Char()
-    office_country_id = fields.Many2one('res.country', string='Office Country', ondelete='restrict',
-                                        default=_get_default_country)
-    office_state_id = fields.Many2one("res.country.state", string='Office State', ondelete='restrict',
-                                      domain="[('country_id', '=', office_country_id)]")
-    office_zip = fields.Char(string='Office Pincode', change_default=True)
-
     email_to = fields.Char(string='Email To')
-    email_cc = fields.Char(string='Email CC')
 
     pickup_date = fields.Date('Pickup Date')
-
-    bill_submission = fields.Many2one('bill.submission', string='Bill Submission Process')
-
-
-
-    @api.onchange('same_site_addr')
-    def _onchange_same_site_addr(self):
-        if self.same_site_addr:
-            self.site_street = self.delivery_street
-            self.site_street2 = self.delivery_street2
-            self.site_city = self.delivery_city
-            self.site_state_id = self.delivery_state_id
-            self.site_zip = self.delivery_zip
-            self.site_country_id = self.delivery_country_id
 
     @api.onchange('same_office_addr')
     def _onchange_same_office_addr(self):
@@ -174,14 +144,17 @@ class SaleOrderInherit(models.Model):
             self.office_zip = self.billing_zip
             self.office_country_id = self.billing_country_id
 
+    @api.onchange('purchaser_name')
+    def _onchange_purchaser_name(self):
+        self.email_to = self.purchaser_name.email if self.purchaser_name is not False else ""
+
     @api.model
     def _get_default_godowns(self):
         godown = self.env['jobsite.godown'].search([('id', 'in', self.jobsite_id.godown_id)]).name
         return godown
 
     godown = fields.Many2one("jobsite.godown", string='Godown', ondelete='restrict')
-    site_godown = fields.Many2one("jobsite.godown", string='Site Godown', ondelete='restrict')
-    office_godown = fields.Many2one("jobsite.godown", string='Office Godown', ondelete='restrict')
+    office_godown = fields.Many2one("jobsite.godown", string='Bill Submission Office Godown', ondelete='restrict')
     bill_godown = fields.Many2one("jobsite.godown", string='Billing Godown', ondelete='restrict')
 
     delivery_date = fields.Date('Delivery Date')
@@ -200,7 +173,7 @@ class SaleOrderInherit(models.Model):
          'It has been agreed 1st Dispatch will be done by Customer on his cost and final Pickup is already paid by '
          'Customer'),
         ('freight_type5', 'It has been agreed 1st Dispatch and final Pickup will be done by Customer on his cost')],
-        string="Freight To Be Paid By : ",
+        string="Freight Terms ",
         default='freight_type1')
 
     price_type = fields.Selection([
@@ -214,75 +187,6 @@ class SaleOrderInherit(models.Model):
     site_contact_name = fields.Many2one("res.partner", string='Site Contact Name',
                                      domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
     # TODO:Select based on designation list
-
-
-    @api.depends('bill_submission')
-    def _compute_hide(self):
-        self.site_contact_hide = True
-        self.site_contact_address_hide = True
-        self.site_godown_hide = True
-        self.office_contact_hide = True
-        self.office_contact_address_hide = True
-        self.office_godown_hide = True
-
-        if self.bill_submission.id is not False:
-            if self.bill_submission.name == 'Office(Purchase/Finance Sign)':
-                self.site_contact_hide = True
-                self.site_contact_address_hide = True
-                self.site_godown_hide = True
-                self.office_contact_hide = False
-                self.office_contact_address_hide = False
-                self.office_godown_hide = False
-
-            if self.bill_submission.name == 'Site(Project Manager/Site Incharge Sign)':
-                self.office_contact_hide = True
-                self.office_contact_address_hide = True
-                self.office_godown_hide = True
-                self.site_contact_hide = False
-                self.site_contact_address_hide = False
-                self.site_godown_hide = False
-
-            if self.bill_submission.name == 'Email':
-                self.site_contact_hide = False
-                self.site_contact_address_hide = True
-                self.site_godown_hide = True
-                self.office_contact_address_hide = True
-                self.office_godown_hide = True
-                self.office_contact_hide = True
-
-            if self.bill_submission.name == 'Courier':
-                self.site_contact_hide = False
-                self.site_contact_address_hide = False
-                self.site_godown_hide = True
-                self.office_contact_address_hide = True
-                self.office_godown_hide = True
-                self.office_contact_hide = True
-
-            if self.bill_submission.name == 'Site(Project Manager/Site Incharge Sign) + Office(Purchase/Finance Sign)':
-                self.office_contact_hide = False
-                self.office_contact_address_hide = False
-                self.office_godown_hide = False
-                self.site_contact_hide = False
-                self.site_contact_address_hide = False
-                self.site_godown_hide = False
-
-            if self.bill_submission.name == 'Special Process:Online ASN/GRN Process':
-                self.office_contact_hide = False
-                self.office_contact_address_hide = True
-                self.office_godown_hide = True
-                self.site_contact_hide = False
-                self.site_contact_address_hide = True
-                self.site_godown_hide = True
-
-
-    site_contact_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-    site_contact_address_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-    site_godown_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-
-    office_contact_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-    office_contact_address_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-    office_godown_hide = fields.Boolean(string='Hide', compute="_compute_hide", store=True)
-
 
     bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact',
                                         domain="[('is_company','=', False), ('parent_id', '=', partner_id), ('category_id','ilike','site contact')]")
@@ -304,17 +208,12 @@ class SaleOrderInherit(models.Model):
     rental_order = fields.Binary(string="Rental Order")
     security_cheque = fields.Binary(string="Security Cheque")
 
-    # def check_customer_validation(self, vals):
-    #     if not vals['tentative_quo']:
-    #         if (self.partner_id.is_company == False) or (self.partner_id.is_customer_branch == True):
-    #             raise ValidationError(_("Please select a Company"))
-
     @api.model
     def _amount_all(self):
         super(SaleOrderInherit, self)._amount_all()
         for order in self:
             # TODO: get tax rate from config
-            tax_rate = 0.28
+            tax_rate = 0.18
 
             amount_untaxed = order.amount_untaxed + order.freight_amount
             amount_tax = order.amount_tax + (order.freight_amount * tax_rate)
@@ -364,6 +263,10 @@ class SaleOrderInherit(models.Model):
             raise ValidationError(_("Confirmation of tentative quotation is not allowed"))
         if not self.po_number:
             raise ValidationError(_('PO Number is mandatory for confirming a quotation'))
+        if not self.bill_site_contact:
+            raise ValidationError(_('Site Contact is mandatory for confirming a quotation'))
+        if not self.office_site_contact:
+            raise ValidationError(_('Office Contact is mandatory for confirming a quotation'))
         if self.rental_order is None and self.customer_branch.rental_order is True:
             raise ValidationError(_('Rental Order is mandatory for this customer'))
         if self.rental_advance is None and self.customer_branch.rental_advance is True:

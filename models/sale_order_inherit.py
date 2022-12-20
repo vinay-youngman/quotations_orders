@@ -265,7 +265,7 @@ class SaleOrderInherit(models.Model):
             raise ValidationError(_('PO Number is mandatory for confirming a quotation'))
         if not self.bill_site_contact:
             raise ValidationError(_('Site Contact is mandatory for confirming a quotation'))
-        if not self.office_site_contact:
+        if not self.bill_office_contact:
             raise ValidationError(_('Office Contact is mandatory for confirming a quotation'))
         if self.rental_order is None and self.customer_branch.rental_order is True:
             raise ValidationError(_('Rental Order is mandatory for this customer'))

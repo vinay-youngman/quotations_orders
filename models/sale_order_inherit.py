@@ -8,7 +8,7 @@ import requests
 from odoo import api, models
 import traceback
 from datetime import datetime
-
+from odoo.modules import get_module_resource
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -19,15 +19,24 @@ class BillSubmission(models.Model):
     _description = 'Bill Submission'
     name = fields.Char(string='Bill Submission', required=True)
 
-
 class ResPartnerInherited(models.Model):
     _inherit = 'res.partner'
+
+    config = open(get_module_resource('quotations_orders', 'static/gst_code_mapping.json'), 'r').read()
+    gst_code_mapping = json.loads(config)
+
+    def _get_state_from_gst(self, gstn):
+        gst_state_code = gstn[0:2]
+        state_code = self.gst_code_mapping[gst_state_code]
+        country_id = self.env['res.country'].search([('code', '=', 'IN')], limit=1).id
+        state = self.env['res.country.state'].search([('code', '=', state_code), ('country_id', '=', country_id)])
+        return state.name if state else ""
 
     def name_get(self):
         result = []
         for rec in self:
             if rec.is_customer_branch:
-                result.append((rec.id, '%s - %s' % (rec.gstn, rec.city)))
+                result.append((rec.id, '%s - %s' % (rec.gstn, rec.state_id.name if rec.state_id else self._get_state_from_gst(self.gstn))))
             else:
                 result.append((rec.id, rec.name))
         return result
@@ -126,23 +135,17 @@ class SaleOrderInherit(models.Model):
                                         domain="[('country_id', '=', delivery_country_id)]")
     delivery_zip = fields.Char(string='Delivery Pincode', change_default=True)
 
-    site_country_id = fields.Many2one('res.country', string='Site Country', ondelete='restrict',
-                                      default=_get_default_country)
-    site_zip = fields.Char(string='Site Pincode', change_default=True)
-
     email_to = fields.Char(string='Email To')
 
     pickup_date = fields.Date('Pickup Date')
 
-    @api.onchange('same_office_addr')
-    def _onchange_same_office_addr(self):
-        if self.same_office_addr:
-            self.office_street = self.billing_street
-            self.office_street2 = self.billing_street2
-            self.office_city = self.billing_city
-            self.office_state_id = self.billing_state_id
-            self.office_zip = self.billing_zip
-            self.office_country_id = self.billing_country_id
+    @api.onchange('tentative_quo')
+    def _onchage_tentative_quotation(self):
+        self.partner_id = False
+        if self.tentative_quo:
+            return  {'domain': {'partner_id': ['|', '&', ('is_company', '=', True), ('is_customer_branch', '=', False), ('is_company', '=', False)]}}
+        else:
+            return  {'domain': {'partner_id': [('is_company', '=', True),('is_customer_branch', '=', False)]}}
 
     @api.onchange('purchaser_name')
     def _onchange_purchaser_name(self):
@@ -153,25 +156,17 @@ class SaleOrderInherit(models.Model):
         godown = self.env['jobsite.godown'].search([('id', 'in', self.jobsite_id.godown_id)]).name
         return godown
 
-    godown = fields.Many2one("jobsite.godown", string='Godown', ondelete='restrict')
-    office_godown = fields.Many2one("jobsite.godown", string='Bill Submission Office Godown', ondelete='restrict')
+    godown = fields.Many2one("jobsite.godown", string='Parent Godown', ondelete='restrict')
     bill_godown = fields.Many2one("jobsite.godown", string='Billing Godown', ondelete='restrict')
 
     delivery_date = fields.Date('Delivery Date')
-
     security_amount = fields.Monetary(string="Security Amount", currency_field='currency_id')
     freight_amount = fields.Monetary(string="Freight Amount", currency_field='currency_id')
     freight_paid_by = fields.Selection([
         ('freight_type1', 'It has been agreed 1st Dispatch and final Pickup will be done by Youngman'),
-        ('freight_type2',
-         'It has been agreed 1st Dispatch will be done by Youngman and final Pickup will be done by Customer on his '
-         'cost'),
-        ('freight_type3',
-         'It has been agreed 1st Dispatch will be done by Customer on his cost and final Pickup would be done by '
-         'Youngman'),
-        ('freight_type4',
-         'It has been agreed 1st Dispatch will be done by Customer on his cost and final Pickup is already paid by '
-         'Customer'),
+        ('freight_type2', 'It has been agreed 1st Dispatch will be done by Youngman and final Pickup will be done by Customer on his cost'),
+        ('freight_type3', 'It has been agreed 1st Dispatch will be done by Customer on his cost and final Pickup would be done by Youngman'),
+        ('freight_type4', 'It has been agreed 1st Dispatch will be done by Customer on his cost and final Pickup is already paid by Customer'),
         ('freight_type5', 'It has been agreed 1st Dispatch and final Pickup will be done by Customer on his cost')],
         string="Freight Terms ",
         default='freight_type1')
@@ -181,19 +176,11 @@ class SaleOrderInherit(models.Model):
         ('monthly', 'Monthly')],
         string="Price Type",
         default='monthly')
-    purchaser_name = fields.Many2one("res.partner", string='Purchaser Name',
-                                     domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company','=', False)]")
 
-    site_contact_name = fields.Many2one("res.partner", string='Site Contact Name',
-                                     domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
-    # TODO:Select based on designation list
-
-    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact',
-                                        domain="[('is_company','=', False), ('parent_id', '=', partner_id), ('category_id','ilike','site contact')]")
-
-
-    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact',
-                                          domain="[('is_company','=', False), ('parent_id', '=', partner_id),('category_id','ilike','office contact')]")
+    purchaser_name = fields.Many2one("res.partner", string='Purchaser Name', domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company', '=', False)]")
+    site_contact_name = fields.Many2one("res.partner", string='Site Contact Name', domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
+    bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact', domain="[('is_company', '=', False), ('parent_id', '=', partner_id), ('category_id','ilike','site contact')]")
+    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact', domain="[('is_company', '=', False), ('parent_id', '=', partner_id),('category_id','ilike','office contact')]")
 
     below_min_price = fields.Boolean('Below Min Price', default=False)
 
@@ -248,44 +235,34 @@ class SaleOrderInherit(models.Model):
                                                       order.amount_untaxed, order.currency_id)
             order.tax_totals_json = json.dumps(tax_totals)
 
-    # @api.model
-    # def create(self, vals):
-    #     self.check_customer_validation(vals)
-    #     return super(SaleOrderInherit, self).create(vals)
-    #
-    # @api.model
-    # def write(self, vals):
-    #     self.check_customer_validation(vals)
-    #     return super(SaleOrderInherit, self).write(vals)
 
     def action_confirm(self):
         if self.tentative_quo:
             raise ValidationError(_("Confirmation of tentative quotation is not allowed"))
         if not self.po_number:
             raise ValidationError(_('PO Number is mandatory for confirming a quotation'))
+        if not self.po_amount:
+            raise ValidationError(_('PO Amount is mandatory for confirming a quotation'))
+        if not self.po_date:
+            raise ValidationError(_('PO Date is mandatory for confirming a quotation'))
+        if not self.place_of_supply:
+            raise ValidationError(_('Place of Supply is mandatory for confirming a quotation'))
         if not self.bill_site_contact:
             raise ValidationError(_('Site Contact is mandatory for confirming a quotation'))
         if not self.bill_office_contact:
             raise ValidationError(_('Office Contact is mandatory for confirming a quotation'))
-        if self.rental_order is None and self.customer_branch.rental_order is True:
+        if not self.rental_order and self.customer_branch.rental_order is True:
             raise ValidationError(_('Rental Order is mandatory for this customer'))
-        if self.rental_advance is None and self.customer_branch.rental_advance is True:
+        if not self.rental_advance and self.customer_branch.rental_advance is True:
             raise ValidationError(_('Rental Advance is mandatory for this customer'))
-        if self.security_cheque is None and self.customer_branch.security_cheque is True:
+        if not self.security_cheque and self.customer_branch.security_cheque is True:
             raise ValidationError(_('Security Cheque is mandatory for this customer'))
 
         res = super(SaleOrderInherit, self).action_confirm()
 
-    @api.onchange('godown')
-    def get_bill_godown(self):
-        if self.godown:
-            self.bill_godown = self.godown
-
     @api.onchange('purchaser_name')
     def get_purchaser_phone(self):
         if self.purchaser_name:
-            if not self.purchaser_name.phone:
-                raise ValidationError(_("Purchaser does not have Phone"))
             if not self.purchaser_name.email:
                 raise ValidationError(_("Purchaser does not have Email"))
 
@@ -389,17 +366,6 @@ class SaleOrderInherit(models.Model):
             raise self.env['res.config.settings'].get_config_warning(error_msg)
         finally:
             traceback.format_exc()
-
-    @api.onchange('site_zip','office_zip')
-    def sendToBetaa(self):
-        if (self.site_zip != False):
-            nearest_godown = self._get_nearest_godown(self.site_zip)
-            godown_names = [entry['godown_name'] for entry in nearest_godown]
-            self.site_godown = self.env['jobsite.godown'].sudo().search([('name', '=', godown_names[0])])
-        elif(self.office_zip != False):
-            nearest_godown = self._get_nearest_godown(self.office_zip)
-            godown_names = [entry['godown_name'] for entry in nearest_godown]
-            self.office_godown = self.env['jobsite.godown'].sudo().search([('name', '=', godown_names[0])])
 
 
 class ProductTemplateInherit(models.Model):

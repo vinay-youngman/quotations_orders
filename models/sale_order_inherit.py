@@ -235,6 +235,7 @@ class SaleOrderInherit(models.Model):
                                                       order.amount_untaxed, order.currency_id)
             order.tax_totals_json = json.dumps(tax_totals)
 
+
     @api.onchange('purchaser_name')
     def get_purchaser_phone(self):
         if self.purchaser_name:

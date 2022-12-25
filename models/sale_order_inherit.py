@@ -236,30 +236,6 @@ class SaleOrderInherit(models.Model):
             order.tax_totals_json = json.dumps(tax_totals)
 
 
-    def action_confirm(self):
-        if self.tentative_quo:
-            raise ValidationError(_("Confirmation of tentative quotation is not allowed"))
-        if not self.po_number:
-            raise ValidationError(_('PO Number is mandatory for confirming a quotation'))
-        if not self.po_amount:
-            raise ValidationError(_('PO Amount is mandatory for confirming a quotation'))
-        if not self.po_date:
-            raise ValidationError(_('PO Date is mandatory for confirming a quotation'))
-        if not self.place_of_supply:
-            raise ValidationError(_('Place of Supply is mandatory for confirming a quotation'))
-        if not self.bill_site_contact:
-            raise ValidationError(_('Site Contact is mandatory for confirming a quotation'))
-        if not self.bill_office_contact:
-            raise ValidationError(_('Office Contact is mandatory for confirming a quotation'))
-        if not self.rental_order and self.customer_branch.rental_order is True:
-            raise ValidationError(_('Rental Order is mandatory for this customer'))
-        if not self.rental_advance and self.customer_branch.rental_advance is True:
-            raise ValidationError(_('Rental Advance is mandatory for this customer'))
-        if not self.security_cheque and self.customer_branch.security_cheque is True:
-            raise ValidationError(_('Security Cheque is mandatory for this customer'))
-
-        res = super(SaleOrderInherit, self).action_confirm()
-
     @api.onchange('purchaser_name')
     def get_purchaser_phone(self):
         if self.purchaser_name:

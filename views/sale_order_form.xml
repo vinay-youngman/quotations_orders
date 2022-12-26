@@ -17,7 +17,7 @@
                             <field name="jobsite_id" position="attributes" options = "{'no_create': True}">
                                 <attribute name="options">{'no_create_edit': True, 'no_create': True, 'create_edit':False, 'create':False}</attribute>
                             </field>
-                            <field name="godown" options = "{'no_create': True}" force_save="1"  readonly="True"/>
+                            <field name="godown" options = "{'no_create': True}" string="Delivery Godown" force_save="1"  readonly="True"/>
                             <field name="beta_quot_id" invisible="1" />
 
                             <label for="delivery_street" string="Delivery Address"/>
@@ -30,14 +30,25 @@
                                 <field name="delivery_country_id" placeholder="Country" class="o_address_country" invisible="True" options='{"no_open": True, "no_create": True}'/>
                             </div>
 
-                            <field name="delivery_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                           <field name="bill_godown"/>
 
+                           <label for="billing_addresses" string="Billing Address" />
+                           <div class="o_address_format">
+                               <field name="billing_addresses" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
+
+                               <field name="billing_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
+                               <field name="billing_street2" placeholder="Street 2..." class="o_address_street"/>
+                               <field name="billing_city" placeholder="City" class="o_address_city"/>
+                               <field name="billing_state_id" placeholder="State" class="o_address_state" attrs="{'required': [('tentative_quo', '=', False)]}" options="{'no_create': True}"/>
+                               <field name="billing_zip" placeholder="Pincode" attrs="{'required': [('tentative_quo', '=', False)]}" class="o_address_zip"/>
+                               <field name="billing_country_id" invisible="True" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                           </div>
+
+                            <field name="delivery_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+                            <field name="pickup_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="freight_amount" attrs="{'required': [('tentative_quo', '=', False)]}"/>
                             <field name="security_amount" attrs="{'required': [('tentative_quo', '=', False)], 'invisible': [('is_security_cheque', '=', False)]}"/>
                             <field name="freight_paid_by" attrs="{'required': [('tentative_quo', '=', False)]}"/>
-
-                            <field name="bill_site_contact" options = "{'no_create': True}"/>
-                            <field name="bill_office_contact" options = "{'no_create': True}"/>
                             <field name="below_min_price"/>
 
                         <div>
@@ -70,22 +81,10 @@
 
                    <field name="price_type" attrs="{'required': [('tentative_quo', '=', False)]}"/>
 
-                   <field name="bill_godown"/>
-
-                   <label for="billing_addresses" string="Billing Address" />
-                   <div class="o_address_format">
-                       <field name="billing_addresses" attrs="{'invisible': [('tentative_quo', '=', True)]}" options = "{'no_create': True}"/>
-
-                       <field name="billing_street" attrs="{'required': [('tentative_quo', '=', False)]}" placeholder="Street..." class="o_address_street"/>
-                       <field name="billing_street2" placeholder="Street 2..." class="o_address_street"/>
-                       <field name="billing_city" placeholder="City" class="o_address_city"/>
-                       <field name="billing_state_id" placeholder="State" class="o_address_state" attrs="{'required': [('tentative_quo', '=', False)]}" options="{'no_create': True}"/>
-                       <field name="billing_zip" placeholder="Pincode" attrs="{'required': [('tentative_quo', '=', False)]}" class="o_address_zip"/>
-                       <field name="billing_country_id" invisible="True" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
-                   </div>
 
 
-                   <field name="pickup_date" attrs="{'required': [('tentative_quo', '=', False)]}"/>
+
+
                    <hr/>
                    <small>Below Details are needed at the time of order confirmation</small>
                    <field name="job_order" readonly="True"/>
@@ -94,6 +93,17 @@
                    <field name="po_date"/>
 
                    <field name="place_of_supply" options = "{'no_create': True}"/>
+                   <field name="bill_submission_process"/>
+                   <field name="bill_submission_process_code" invisible="1"/>
+
+                   <field name="site_bill_submission_godown" attrs="{'invisible': [('bill_submission_process_code', 'not in', ['site','site_office'])]}"/>
+                   <field name="office_bill_submission_godown" attrs="{'invisible': [('bill_submission_process_code', 'not in', ['office','site_office'])]}"/>
+                   <field name="bill_submission_office_branch" attrs="{'invisible': [('bill_submission_process_code', 'not in', ['office','site_office'])]}"/>
+                   <field name="bill_submission_email" attrs="{'invisible': [('bill_submission_process_code', '!=', 'email')]}"/>
+                   <field name="bill_site_contact" options = "{'no_create': True}" attrs="{'invisible': [('bill_submission_process_code', 'not in', ['site','site_office'])]}"/>
+                   <field name="bill_office_contact" options = "{'no_create': True}" attrs="{'invisible': [('bill_submission_process_code', 'not in', ['office','site_office'])]}"/>
+
+
 
 <!--                   <field name="amendment_doc"/>-->
 <!--                   <field name="released_at"/>-->

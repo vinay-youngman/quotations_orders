@@ -119,20 +119,23 @@ class SaleOrderInherit(models.Model):
     billing_street = fields.Char(string="Billing Address")
     billing_street2 = fields.Char()
     billing_city = fields.Char()
-    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict',
-                                         default=_get_default_country)
-    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict',
-                                       domain="[('country_id', '=', billing_country_id)]")
+    billing_country_id = fields.Many2one('res.country', string='Billing Country', ondelete='restrict',  default=_get_default_country)
+    billing_state_id = fields.Many2one("res.country.state", string='Billing State', ondelete='restrict', domain="[('country_id', '=', billing_country_id)]")
     billing_zip = fields.Char(string='Billing Pincode', change_default=True)
 
     # Delivery Address
     delivery_street = fields.Char(string="Delivery Address")
     delivery_street2 = fields.Char()
     delivery_city = fields.Char()
-    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict',
-                                          default=_get_default_country)
-    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',
-                                        domain="[('country_id', '=', delivery_country_id)]")
+    delivery_country_id = fields.Many2one('res.country', string='Delivery Country', ondelete='restrict', default=_get_default_country)
+    delivery_state_id = fields.Many2one("res.country.state", string='Delivery State', ondelete='restrict',  domain="[('country_id', '=', delivery_country_id)]")
+
+    bill_submission_office_branch = fields.Many2one(comodel_name='res.partner', string='Customer Bill Submission Branch', domain="[('is_company', "
+                                                                                                                               "'=', True), "
+                                                                                                                               "('is_customer_branch', '=', True), ('parent_id', '=', partner_id)]")
+
+    bill_submission_email = fields.Char(string='Bill Submission Email')
+
     delivery_zip = fields.Char(string='Delivery Pincode', change_default=True)
 
     email_to = fields.Char(string='Email To')
@@ -158,6 +161,8 @@ class SaleOrderInherit(models.Model):
 
     godown = fields.Many2one("jobsite.godown", string='Parent Godown', ondelete='restrict')
     bill_godown = fields.Many2one("jobsite.godown", string='Billing Godown', ondelete='restrict')
+    site_bill_submission_godown = fields.Many2one("jobsite.godown", string='Youngman Bill Submission Site Godown', ondelete='restrict')
+    office_bill_submission_godown = fields.Many2one("jobsite.godown", string='Youngman Bill Submission Office Godown', ondelete='restrict')
 
     delivery_date = fields.Date('Delivery Date')
     security_amount = fields.Monetary(string="Security Amount", currency_field='currency_id')
@@ -180,7 +185,7 @@ class SaleOrderInherit(models.Model):
     purchaser_name = fields.Many2one("res.partner", string='Purchaser Name', domain="[('parent_id', '=', partner_id),('category_id','ilike','purchaser'),('is_company', '=', False)]")
     site_contact_name = fields.Many2one("res.partner", string='Site Contact Name', domain="[('parent_id', '=', partner_id),('is_company','=', False),('category_id','ilike','site contact')]")
     bill_site_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Site Contact', domain="[('is_company', '=', False), ('parent_id', '=', partner_id), ('category_id','ilike','site contact')]")
-    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Bill Submission Office Contact', domain="[('is_company', '=', False), ('parent_id', '=', partner_id),('category_id','ilike','office contact')]")
+    bill_office_contact = fields.Many2one(comodel_name='res.partner', string='Customer Bill Submission Office Contact', domain="[('is_company', '=', False), ('parent_id', '=', partner_id),('category_id','ilike','office contact')]")
 
     below_min_price = fields.Boolean('Below Min Price', default=False)
 
@@ -190,6 +195,8 @@ class SaleOrderInherit(models.Model):
     is_rental_advance = fields.Boolean(related='customer_branch.rental_advance', store=False)
     is_rental_order = fields.Boolean(related='customer_branch.rental_order', store=False)
     is_security_cheque = fields.Boolean(related='customer_branch.security_cheque', store=False)
+    bill_submission_process = fields.Char(related='partner_id.bill_submission_process.name', store=False)
+    bill_submission_process_code = fields.Char(related='partner_id.bill_submission_process.code', store=False)
 
     rental_advance = fields.Binary(string="Rental Advance")
     rental_order = fields.Binary(string="Rental Order")

@@ -75,6 +75,36 @@
 		<xpath expr="//td[@name='td_taxes']" position="replace">
 		</xpath>
 
+        <xpath expr="//div[@name='so_total_summary']" position="replace">
+            <div class="clearfix" name="so_total_summary">
+                <div id="total" class="row" name="total">
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Untaxed Amount</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Freight</td>
+                                <td></td>
+                                <span t-field="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                            </tr>
+                            <tr>
+                                <td>Tax Amount</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+
+
 		<xpath expr="//p[@id='fiscal_position_remark']" position="after">
 
 			<table class="table table-sm o_main_table">
@@ -82,10 +112,7 @@
 					<tr>
 					  <th style="width: 336.5px; font-size: 16px; text-align:center">Freight with inco. terms</th>
 						<td id= "d1" style = "width: 336.5px; font-size: 14px;">
-						<ol><br/>
-							<span t-esc="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-							<br/>
-							<br/>
+						<ol>
 							<span t-field="doc.freight_paid_by"/>
 						  </ol>
 						</td>

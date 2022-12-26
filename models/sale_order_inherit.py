@@ -31,7 +31,7 @@ class ResPartnerInherited(models.Model):
         country_id = self.env['res.country'].search([('code', '=', 'IN')], limit=1).id
         state = self.env['res.country.state'].search([('code', '=', state_code), ('country_id', '=', country_id)])
         return state.name if state else ""
-
+"""
     def name_get(self):
         result = []
         for rec in self:
@@ -40,7 +40,7 @@ class ResPartnerInherited(models.Model):
             else:
                 result.append((rec.id, rec.name))
         return result
-
+"""
 
 class SaleOrderInherit(models.Model):
     _name = 'sale.order'

@@ -82,20 +82,19 @@
                         <table class="table table-sm">
                             <tr>
                                 <td>Untaxed Amount</td>
-                                <td></td>
+                                <td><span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
                             <tr>
                                 <td>Freight</td>
-                                <td></td>
-                                <span t-field="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                                <td><span t-field="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
                             <tr>
                                 <td>Tax Amount</td>
-                                <td></td>
+                                <td><span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td></td>
+                                <td><span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
                         </table>
                     </div>

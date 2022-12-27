@@ -26,7 +26,7 @@
 			</div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-8">
                     <table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
                         <tr>
                             <td>QUOTATION DATE</td>
@@ -50,8 +50,8 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-lg-4">
-                    <table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+                <div class="col-4">
+                    <table id="movement_details" class="table table-sm" style="display: table-row-group">
                         <tr>
                             <td><small>Supply date</small></td>
                             <td><small><span t-field="doc.delivery_date" t-options='{"widget": "date"}'/></small></td>
@@ -82,9 +82,6 @@
 					<tr>
 						<td name="td_kind_attention">
 							<span t-field="doc.purchaser_name.name"/><br/>
-<!--							<span t-field="doc.partner_id.street"/>-->
-<!--							<span t-field="doc.partner_id.street2"/>-->
-<!--							<span t-field="doc.partner_id.zip"/>-->
 						</td>
 						<td name="td_delivery_addr">
 							<span t-field="doc.delivery_street"/>
@@ -92,13 +89,16 @@
 							<span t-field="doc.delivery_city"/>
 							<span t-field="doc.delivery_state_id.name"/>
 							<span t-field="doc.delivery_zip"/>
+                            <t t-if="doc.site_contact_name.mobile">Contact: <span t-field="doc.site_contact_name.mobile"/></t>
 						</td>
 						<td name="td_billing_addr">
+                            <t t-if="doc.partner_id"><span t-field="doc.partner_id.name"/></t>
 							<span t-field="doc.billing_street"/>
 							<span t-field="doc.billing_street2"/>
 							<span t-field="doc.billing_city"/>
 							<span t-field="doc.billing_state_id.name"/>
 							<span t-field="doc.billing_zip"/>
+                            <t t-if="doc.customer_branch"><span t-field="doc.customer_branch.gstn"/></t>
 						</td>
 					</tr>
                 </tbody>

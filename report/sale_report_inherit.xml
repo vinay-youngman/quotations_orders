@@ -19,34 +19,55 @@
         </xpath>
     </template>
     <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
-
         <xpath expr="//t[@t-set='address']" position="replace"/>
 		<xpath expr="//h2[@class='mt16']" position="replace">
 			<div class="row">
 				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
 			</div>
-			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
-                <tr>
-                    <td>QUOTATION DATE</td>
-                    <td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
-                </tr>
-                <tr>
-                    <td>QUOTATION NUMBER</td>
-                    <td><span t-field="doc.name"/></td>
-                </tr>
-				<tr>
-					<td>CUSTOMER NAME</td>
-					<td><span t-field="doc.partner_id.name"/></td>
-				</tr>
-                <tr>
-                    <td>SUB CUSTOMER GST</td>
-                    <td><span t-field="doc.customer_branch.gstn"/></td>
-                </tr>
-				<tr>
-					<td>PICKUP DATE</td>
-					<td><span t-field="doc.pickup_date"/></td>
-				</tr>
-			</table><br/>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+                        <tr>
+                            <td>QUOTATION DATE</td>
+                            <td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
+                        </tr>
+                        <tr>
+                            <td>QUOTATION NUMBER</td>
+                            <td><span t-field="doc.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>CUSTOMER NAME</td>
+                            <td><span t-field="doc.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>SUB CUSTOMER GST</td>
+                            <td><span t-field="doc.customer_branch.gstn"/></td>
+                        </tr>
+                        <tr>
+                            <td>PICKUP DATE</td>
+                            <td><span t-field="doc.pickup_date"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                    <table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+                        <tr>
+                            <td><small>Supply date</small></td>
+                            <td><small><span t-field="doc.delivery_date" t-options='{"widget": "date"}'/></small></td>
+                        </tr>
+                        <tr>
+                            <td>Pickup Date</td>
+                            <td><small><span t-field="doc.pickup_date" t-options='{"widget": "date"}'/></small></td>
+                        </tr>
+                        <tr>
+                            <td>Duration</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
 
                 <!-- In case we want to repeat the header, remove "display: table-row-group" -->
 			<table id="quotation_tab" class="table table-sm o_main_table">

@@ -8,10 +8,11 @@
                     <strong><li t-if="company.name"><span t-field="company.name"/></li></strong>
                     <li t-if="company.email"><span t-field="company.email"/></li>
                     <t t-if="doc.bill_godown">
-                        <li t-if="doc.bill_godown.gstn">GSTN: <span t-field="doc.bill_godown.gstn"/></li>
-                        <li t-if="doc.bill_godown.phone">Phone: <span t-field="doc.bill_godown.phone"/></li>
-                        <li t-if="doc.bill_godown.email">Email: <span t-field="doc.bill_godown.email"/></li>
                         <li t-if="doc.bill_godown.address"><span t-field="doc.bill_godown.address"/></li>
+                        <li t-if="doc.bill_godown.email">Email: <span t-field="doc.bill_godown.email"/></li>
+                        <li t-if="doc.bill_godown.gstn">GSTN: <span t-field="doc.bill_godown.gstn"/></li>
+                        <li t-if="doc.parent_id.team_id.name">Phone: <span t-field="doc.bill_godown.phone"/></li>
+                        <li t-else="">Phone: 9015964626</li>
                     </t>
 
                 </ul>
@@ -25,27 +26,26 @@
 			<div class="row">
 				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
 			</div>
-
 			<table id="customer_tab" class="table table-sm o_main_table" style="display: table-row-group">
+                <tr>
+                    <td>QUOTATION DATE</td>
+                    <td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
+                </tr>
+                <tr>
+                    <td>QUOTATION NUMBER</td>
+                    <td><span t-field="doc.name"/></td>
+                </tr>
 				<tr>
-					<td><strong>CUSTOMER NAME</strong></td>
+					<td>CUSTOMER NAME</td>
 					<td><span t-field="doc.partner_id.name"/></td>
 				</tr>
+                <tr>
+                    <td>SUB CUSTOMER GST</td>
+                    <td><span t-field="doc.customer_branch.gstn"/></td>
+                </tr>
 				<tr>
-					<td><strong>PICKUP DATE</strong></td>
+					<td>PICKUP DATE</td>
 					<td><span t-field="doc.pickup_date"/></td>
-				</tr>
-				<tr>
-					<td><strong>SUB CUSTOMER GST</strong></td>
-					<td><span t-field="doc.customer_branch.gstn"/></td>
-				</tr>
-				<tr>
-					<td><strong>QUOTATION NUMBER</strong></td>
-					<td><span t-field="doc.name"/></td>
-				</tr>
-				<tr>
-					<td><strong>QUOTATION DATE</strong></td>
-					<td><span t-field="doc.date_order" t-options='{"widget": "date"}'/></td>
 				</tr>
 			</table><br/>
 

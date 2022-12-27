@@ -11,7 +11,7 @@
                         <li t-if="doc.bill_godown.address"><span t-field="doc.bill_godown.address"/></li>
                         <li t-if="doc.bill_godown.email">Email: <span t-field="doc.bill_godown.email"/></li>
                         <li t-if="doc.bill_godown.gstn">GSTN: <span t-field="doc.bill_godown.gstn"/></li>
-                        <li t-if="doc.parent_id.team_id.name">Phone: <span t-field="doc.bill_godown.phone"/></li>
+                        <li t-if="doc.partner_id.team_id.name">Phone: <span t-field="doc.bill_godown.phone"/></li>
                         <li t-else="">Phone: 9015964626</li>
                     </t>
 

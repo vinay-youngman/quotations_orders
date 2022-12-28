@@ -10,7 +10,7 @@ import traceback
 from datetime import datetime
 from odoo.modules import get_module_resource
 from odoo.exceptions import ValidationError
-
+from dateutil import relativedelta
 _logger = logging.getLogger(__name__)
 
 
@@ -57,6 +57,22 @@ class SaleOrderInherit(models.Model):
                                  domain="[('is_company', '=', True),('is_customer_branch', '=', False)]")
     validity_date = fields.Date(invisible=True)
     job_order = fields.Char(string="Job Order")
+
+    order_duration = fields.Char(string="Order Duration", compute="_compute_duration", store=False)
+    def _compute_duration(self):
+        if self.delivery_date and self.pickup_date:
+            delta = relativedelta.relativedelta(self.pickup_date, self.delivery_date)
+            months = 0
+            if delta.months:
+                months = delta.months
+            if delta.year:
+                months = months + delta.year * 12
+            # if delta.days:
+            #     months = months + delta.seconds + delta.days * 3600 * 24
+
+            self.order_duration = "{} Months and {} Days".format(months, delta.days)
+        else:
+            self.order_duration = False
 
     place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict',
                                       domain="[('country_id', '=', billing_country_id)]")
@@ -394,6 +410,7 @@ class SaleOrderLineInherit(models.Model):
     item_code = fields.Char(string="Item Code")
     beta_quot_item_id = fields.Integer()
 
+
     @api.onchange('price_unit')
     def min_price(self):
         if self.order_id.below_min_price:
@@ -408,3 +425,5 @@ class SaleOrderLineInherit(models.Model):
                 'warning': {'title': 'Warning',
                             'message': 'Current Price < Unit Price', },
             }
+
+

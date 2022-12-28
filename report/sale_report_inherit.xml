@@ -134,20 +134,23 @@
                     <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
                         <table class="table table-sm">
                             <tr>
-                                <td>Untaxed Amount</td>
-                                <td><span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
+                                <td>Amount</td>
+                                <td><span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/><span t-if="doc.price_type == 'daily'">/Day</span><span t-else="">/Month</span></td>
                             </tr>
                             <tr>
-                                <td>Freight</td>
+                                <td>Freight as per Inco Terms</td>
                                 <td><span t-field="doc.freight_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
-                            <tr>
-                                <td>Tax Amount</td>
-                                <td><span t-field="doc.amount_tax" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
+                            <tr t-if="doc.security_amount">
+                                <td>Security Amount<br/><small>As a company policy, we accept cheques of value less than 49,500 only, in case your security amount is more than this, kindly make multiple cheques</small></td>
+                                <td><span t-field="doc.security_amount" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
                             </tr>
                             <tr>
                                 <td>Total</td>
                                 <td><span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Taxes Extra @ 18% GST</td>
                             </tr>
                         </table>
                     </div>

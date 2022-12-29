@@ -190,7 +190,30 @@
             </table>
 
 
-            <p style="text-align:justify"><u><strong>RENTAL TERMS &amp; CONDITIONS</strong></u></p>
+            <h4 style="text-align:justify"><u><strong>TERMS &amp; CONDITIONS</strong></u></h4>
+
+            <p style="text-align:justify"><u><strong>TAX</strong></u></p>
+            <p style="text-align:justify"><u><strong>BILLING &amp; PAYMENT PROCEDURE WITH TERMS</strong></u></p>
+            <p style="text-align:justify"><u><strong>ORDER PAYMENT TERMS</strong></u></p>
+            <p style="text-align:justify"><u><strong>MATERIAL HANDLING</strong></u></p>
+            <p style="text-align:justify"><u><strong>OWNERSHIP</strong></u></p>
+            <p style="text-align:justify"><u><strong>MISSING &amp; DAMAGES POLICY</strong></u></p>
+
+            <ol>
+                <li>
+                    <p style="text-align:justify"> At the time of delivery of material, material checklist is signed by client’s representative and can be asked to be presented at time of pickup to justify if any claims are fair or not.</p>
+                </li>
+                <li>
+                    <p style="text-align:justify">Damage Policy &amp; Price: <u><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf">https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf</a></u></p>
+                </li>
+                <li>
+                    <p style="text-align:justify">Missing Policy &amp; Price: <u><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf">https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf</a></u></p>
+                </li>
+                <li>
+                    <p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order.</p>
+                </li>
+            </ol>
+
 
 			<ol>
 				<li>
@@ -292,7 +315,7 @@
 				<p style="text-align:justify">In case of non-payment, Youngman has the right to utilize the security for settling the amount.</p>
 				</li>
 				<li>
-				<p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
+				    <p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
 				</li>
 			</ol>
 

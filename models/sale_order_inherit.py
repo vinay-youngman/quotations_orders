@@ -58,9 +58,7 @@ class SaleOrderInherit(models.Model):
     validity_date = fields.Date(invisible=True)
     job_order = fields.Char(string="Job Order")
 
-<<<<<<< HEAD
     place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict')
-=======
     order_duration = fields.Char(string="Order Duration", compute="_compute_duration", store=False)
     def _compute_duration(self):
         if self.delivery_date and self.pickup_date:
@@ -77,7 +75,8 @@ class SaleOrderInherit(models.Model):
 
     place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict',
                                       domain="[('country_id', '=', billing_country_id)]")
->>>>>>> 2cb3dc923f98e2cb6e117d853fee16d71d3bcfbc
+
+
     # amendment_doc = fields.Char(string="Amendment Doc")
     # released_at = fields.Datetime(string="Released At")
     # reason_of_release = fields.Selection([

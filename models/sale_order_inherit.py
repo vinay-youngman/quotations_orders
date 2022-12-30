@@ -221,11 +221,9 @@ class SaleOrderInherit(models.Model):
     def _amount_all(self):
         super(SaleOrderInherit, self)._amount_all()
         for order in self:
-            # TODO: get tax rate from config
-            tax_rate = 0.18
 
-            amount_untaxed = order.amount_untaxed + order.freight_amount
-            amount_tax = order.amount_tax + (order.freight_amount * tax_rate)
+            amount_untaxed = order.amount_untaxed
+            amount_tax = 0
 
             order.update({
                 'amount_untaxed': amount_untaxed,

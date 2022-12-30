@@ -7,7 +7,7 @@ import logging
 import requests
 from odoo import api, models
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 from odoo.modules import get_module_resource
 from odoo.exceptions import ValidationError, UserError
 from dateutil import relativedelta
@@ -62,7 +62,7 @@ class SaleOrderInherit(models.Model):
     order_duration = fields.Char(string="Order Duration", compute="_compute_duration", store=False)
     def _compute_duration(self):
         if self.delivery_date and self.pickup_date:
-            delta = relativedelta.relativedelta(self.pickup_date, self.delivery_date)
+            delta = relativedelta.relativedelta(self.pickup_date + timedelta(days=1), self.delivery_date)
             months = 0
             if delta.months:
                 months = delta.months

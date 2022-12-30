@@ -21,7 +21,7 @@
     <template id="sale_report_inherit" inherit_id="sale.report_saleorder_document">
         <xpath expr="//t[@t-set='address']" position="replace"/>
 		<xpath expr="//h2[@class='mt16']" position="replace">
-			<div class="row">
+			<div class="row" style="padding:25px;">
 				<h4>RENTAL AGREEMENT &amp; QUOTATION</h4>
 			</div>
 
@@ -319,6 +319,7 @@
 			<p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
 			<p style="text-align:justify">I acknowledge that I have read, and do hereby accept the terms and conditions contained in this.</p>
 
+			<p></p>
         </xpath>
 
     </template>

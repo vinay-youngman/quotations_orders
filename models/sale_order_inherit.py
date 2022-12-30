@@ -9,7 +9,7 @@ from odoo import api, models
 import traceback
 from datetime import datetime
 from odoo.modules import get_module_resource
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from dateutil import relativedelta
 _logger = logging.getLogger(__name__)
 
@@ -318,6 +318,9 @@ class SaleOrderInherit(models.Model):
         endpoint = self.env['ir.config_parameter'].sudo().get_param('ym_sms.url')
         sender = self.env['ir.config_parameter'].sudo().get_param('ym_sms.sender')
         number = self.env['ir.config_parameter'].sudo().get_param('ym_sms.sales_head_contact')
+
+        if not (api_key or endpoint or sender or number):
+            raise UserError("Rapid SMS details not configured. Please reach out to system admins")
 
         otp = self._generate_otp()
 

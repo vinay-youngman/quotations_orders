@@ -67,8 +67,6 @@ class SaleOrderInherit(models.Model):
                 months = delta.months
             if delta.year:
                 months = months + delta.year * 12
-            # if delta.days:
-            #     months = months + delta.seconds + delta.days * 3600 * 24
 
             self.order_duration = "{} Months and {} Days".format(months, delta.days)
         else:

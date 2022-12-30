@@ -228,7 +228,7 @@ class SaleOrderInherit(models.Model):
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax,
+                'amount_total': amount_untaxed + amount_tax + order.freight_amount,
             })
 
     @api.depends('order_line.tax_id', 'order_line.price_unit', 'amount_total', 'amount_untaxed', 'freight_amount')

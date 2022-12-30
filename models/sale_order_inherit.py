@@ -73,9 +73,7 @@ class SaleOrderInherit(models.Model):
         else:
             self.order_duration = False
 
-    place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict',
-                                      domain="[('country_id', '=', billing_country_id)]")
-
+    place_of_supply = fields.Many2one("res.country.state", string='Place of Supply', ondelete='restrict')
 
     # amendment_doc = fields.Char(string="Amendment Doc")
     # released_at = fields.Datetime(string="Released At")

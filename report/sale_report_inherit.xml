@@ -6,14 +6,15 @@
             <div class="col-5 offset-1" name="company_address">
                 <ul class="list-unstyled">
                     <strong><li t-if="company.name"><span t-field="company.name"/></li></strong>
-                    <t t-if="doc.bill_godown">
-                        <li t-if="doc.bill_godown.address"><span t-field="doc.bill_godown.address"/></li>
-                        <li>Email: <span t-field="user.login"/></li>
-                        <li t-if="doc.bill_godown.gstn">GSTN: <span t-field="doc.bill_godown.gstn"/></li>
-                        <li t-if="doc.partner_id.team_id.name == 'PAM'">Phone: <span t-field="doc.user_id.mobile"/></li>
-                        <li t-else="">Phone: 9015964626</li>
-                    </t>
-
+					<t t-if="doc">
+						<t t-if="doc.bill_godown">
+							<li t-if="doc.bill_godown.address"><span t-field="doc.bill_godown.address"/></li>
+							<li>Email: <span t-field="user.login"/></li>
+							<li t-if="doc.bill_godown.gstn">GSTN: <span t-field="doc.bill_godown.gstn"/></li>
+                            <li t-if="doc.partner_id.team_id.name == 'PAM'">Phone: <span t-field="doc.user_id.mobile"/></li>
+							<li t-else="">Phone: 9015964626</li>
+						</t>
+					</t>
                 </ul>
             </div>
         </xpath>
@@ -43,10 +44,6 @@
                         <tr>
                             <td>SUB CUSTOMER GST</td>
                             <td><span t-field="doc.customer_branch.gstn"/></td>
-                        </tr>
-                        <tr>
-                            <td>PICKUP DATE</td>
-                            <td><span t-field="doc.pickup_date"/></td>
                         </tr>
                     </table>
                 </div>
@@ -81,7 +78,7 @@
                 <tbody class="sale_tbody">
 					<tr>
 						<td name="td_kind_attention">
-							<span t-field="doc.purchaser_name.name"/><span> Ji</span>
+							<span t-field="doc.purchaser_name.name"/>
 						</td>
 						<td name="td_delivery_addr">
 							<span t-field="doc.delivery_street"/>
@@ -155,14 +152,6 @@
                     </div>
                 </div>
             </div>
-			<div class="col-4">
-				<table id="movement_details" class="table table-sm" style="display: table-row-group">
-					<tr>
-						<td><small>Duration</small></td>
-						<td><small><span t-field="doc.order_duration" /></small></td>
-					</tr>
-				</table>
-			</div>
         </xpath>
 		<xpath expr="//p[@id='fiscal_position_remark']" position="after">
 
@@ -193,8 +182,10 @@
                 </tbody>
             </table>
 
-
-            <h4 style="text-align:justify"><u><strong>TERMS &amp; CONDITIONS</strong></u></h4>
+			<table>
+				<div>
+					<h4 style="text-align:justify"><u><strong>TERMS &amp; CONDITIONS</strong></u></h4>
+				</div>
 
 			<ol type = "1">
 
@@ -255,74 +246,125 @@
 							you till the date the material is in your possession as per existing payment terms and penal rental if any as applicable.</p>
 						</li>
 
-					</ol>
-				</li>
-				<li>
-					<h6><u><strong>ORDER PAYMENT TERMS</strong></u></h6>
-					<ol>
-						<li> <p style="text-align:justify">Security deposit is only acceptable in form of either <strong><i> non-dated cheque or</i> <b>BG</b> or <i> Payment </i></strong>of amount not less
-							than mentioned in the quote as “Security Amount”.</p>
-						</li>
-						<li><p style="text-align:justify">In case you are not a credit customer with us, you are requested to pay 1-month advance rental which shall be
-							adjusted against the last invoice.</p>
-						</li>
-						<li> <p style="text-align:justify">In case of default of these terms, Youngman India shall be authorized to adjust the security provided by you
-							to clear the liability and forcefully take custody of material.</p>
-						</li>
-						<li> <p style="text-align:justify">Youngman will not be responsible for any delay in dispatch happen due to delay in receiving advance
-							payment, corrected PO and any other reason which is beyond control of Youngman.</p>
-						</li>
-						<li> <p style="text-align:justify">We request you to share a formal work order in the <b><i><u>same name and GSTIN</u></i></b> we have shared this quotation.
-							Please recheck this, as per our experience most of the times the major reason of errors and delays on e-way
-							bill/Challans/Invoicing is this only.</p>
-						</li>
-						<li> <p style="text-align:justify">Rental billing shall close <b><u><i>only</i></u></b> after successful pickup from client site.</p>
-						</li>
-					</ol>
-				</li>
-				<li>
-					<h6><u><strong>MATERIAL HANDLING</strong></u></h6>
-					<ol>
-						<li> <p style="text-align:justify">Though we ensure rental goods to be absolutely neat and clean, you can expect small dents as this is used
-							material but be 100% sure of structural strength as we thoroughly check material before dispatch and upon
-							delivery at site.</p>
-						</li>
-						<li><p style="text-align:justify">Material shall be inspected for Quantity <span>&#38;</span> Quality during the time of delivery/return and accordingly the
-							receiving of return should be given on challan and checklists.</p>
-						</li>
-						<li> <p style="text-align:justify">Loading and Unloading of equipment/material on site will be in client’s scope.</p></li>
-						<li> <p style="text-align:justify">For de-hire the scaffolding from site, the necessary documents will be arrange at your scope (i.e gate
-								pass).Once the gate pass is ready and it us to be intimated to us through email.</p>
-						</li>
-						<li> <p style="text-align:justify">Once our vehicle reached your site for de hiring and at that time if the material is not ready for pick-up due to
-								regardless of reason i.e gate pass not ready etc. then the transportation charges will be claimed at actual as
-								well as bills will be generated till we get back the material from the site.</p>
-						</li>
-						<li> <p style="text-align:justify">Youngman will not be liable for any loss/damage due human error, negligence during use, improper safety
-							 precautions by end user, faulty erection/fixation or for any damages.</p>
-						</li>
-					</ol>
-				</li>
-				<li>
-					<h6><u><strong>MISSING &amp; DAMAGES POLICY</strong></u></h6>
-					<ol>
-						<li> <p style="text-align:justify">At the time of delivery of material, material checklist is signed by client’s representative and can be asked to
-							be presented at time of pickup to justify if any claims are fair or not.</p>
-						</li>
-						<li><p style="text-align:justify"><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf"><u>Damage Policy <span>&#38;</span> Price</u></a></p></li>
-						<li><p style="text-align:justify"><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf"><u>Missing Policy <span>&#38;</span> Price</u></a></p></li>
-						<li> <p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order.</p></li>
-					</ol>
-				</li>
-			</ol>
+						</ol>
+					</li>
+					<li>
+						<h6><u><strong>ORDER PAYMENT TERMS</strong></u></h6>
+						<ol>
+							<li> <p style="text-align:justify">Security deposit is only acceptable in form of either <strong><i> non-dated cheque or</i> <b>BG</b> or <i> Payment </i></strong>of amount not less
+								than mentioned in the quote as “Security Amount”.</p>
+							</li>
+							<li><p style="text-align:justify">In case you are not a credit customer with us, you are requested to pay 1-month advance rental which shall be
+								adjusted against the last invoice.</p>
+							</li>
+							<li> <p style="text-align:justify">In case of default of these terms, Youngman India shall be authorized to adjust the security provided by you
+								to clear the liability and forcefully take custody of material.</p>
+							</li>
+							<li> <p style="text-align:justify">Youngman will not be responsible for any delay in dispatch happen due to delay in receiving advance
+								payment, corrected PO and any other reason which is beyond control of Youngman.</p>
+							</li>
+							<li> <p style="text-align:justify">We request you to share a formal work order in the <b><i><u>same name and GSTIN</u></i></b> we have shared this quotation.
+								Please recheck this, as per our experience most of the times the major reason of errors and delays on e-way
+								bill/Challans/Invoicing is this only.</p>
+							</li>
+							<li> <p style="text-align:justify">Rental billing shall close <b><u><i>only</i></u></b> after successful pickup from client site.</p>
+							</li>
+						</ol>
+					</li>
+					<li>
+						<h6><u><strong>MATERIAL HANDLING</strong></u></h6>
+						<ol>
+							<li> <p style="text-align:justify">Though we ensure rental goods to be absolutely neat and clean, you can expect small dents as this is used
+								material but be 100% sure of structural strength as we thoroughly check material before dispatch and upon
+								delivery at site.</p>
+							</li>
+							<li><p style="text-align:justify">Material shall be inspected for Quantity <span>&#38;</span> Quality during the time of delivery/return and accordingly the
+								receiving of return should be given on challan and checklists.</p>
+							</li>
+							<li> <p style="text-align:justify">Loading and Unloading of equipment/material on site will be in client’s scope.</p></li>
+							<li> <p style="text-align:justify">For de-hire the scaffolding from site, the necessary documents will be arrange at your scope (i.e gate
+									pass).Once the gate pass is ready and it us to be intimated to us through email.</p>
+							</li>
+							<li> <p style="text-align:justify">Once our vehicle reached your site for de hiring and at that time if the material is not ready for pick-up due to
+									regardless of reason i.e gate pass not ready etc. then the transportation charges will be claimed at actual as
+									well as bills will be generated till we get back the material from the site.</p>
+							</li>
+							<li> <p style="text-align:justify">Youngman will not be liable for any loss/damage due human error, negligence during use, improper safety
+								 precautions by end user, faulty erection/fixation or for any damages.</p>
+							</li>
+						</ol>
+					</li>
+					<li>
+						<h6><u><strong>OWNERSHIP</strong></u></h6>
+						<ol>
+							<li> <p style="text-align:justify">Youngman will not be responsible for any damages occur to the other things (e.g. floor, walls, etc.) due to the
+								use of scaffold/Machine/Equipment provided by Youngman. Force Majeure will not be applicable in rental
+								orders. In case of any unforeseen incidents during rental tenure the invoicing will be continued till the date
+								of pick-up of the material and it will be processed as per the finalized terms during order closing.</p>
+							</li>
+							<li><p style="text-align:justify">The person receiving/giving receiving of the material on site will be considered as the authorized person of
+								the client organization.</p>
+							</li>
+							<li> <p style="text-align:justify">If the concerned person on site giving receiving at time of delivery or pick up no longer works with the
+								client, the client is still accountable/responsible for the receiving given by him.</p></li>
+							<li> <p style="text-align:justify">Youngman reserves all rights of pickup of material in case of any Invoice payment default and customer shall
+								support in process of pickup.</p>
+							</li>
+							<li> <p style="text-align:justify">If the material is picked up by client from Youngman warehouse or the material is sent via part load transport
+								by Youngman, responsibility for any damages occurring during the same/Insurance will not be in Youngman
+								scope.</p>
+							</li>
+							<li> <p style="text-align:justify">Client should inform and take approval from Youngman in case of shifting of material internally by the client
+								from one site to another.</p>
+							</li>
+							<li> <p style="text-align:justify">If the material is handed over/transferred to a client’s sister concern company, both the client companies are
+								responsible to maintain the original delivery challan. Youngman is not responsible in case of any damage or
+								missing components during the internal transfer between the two parties . The responsibility to return
+								complete material to Youngman in good condition will automatically be transferred to the party /client, who
+								has used it the latest. Any internal conflict between the two clients with respect to the material /payment has
+								to be resolved by themselves with no responsibility/involvement of Youngman.ss/damage due human error, negligence during use, improper safety
+								precautions by end user, faulty erection/fixation or for any damages.</p>
+							</li>
+							<li> <p style="text-align:justify">In case of Ownership shifting i.e. from selling the assets already under rental service, the shift will only be
+								considered after receipt of the total outstanding including pro-rata invoicing till date of receiving sale
+								confirmed PO with Sale consideration amount.</p>
+							</li>
+							<li> <p style="text-align:justify">The material provided on rental to client is property of Youngman and Youngman has the right to take back
+								its material when it deems fit, in case of any issues with client at any site regards to payment performance or
+								any raise in unforeseen issues. Even Site owner or principal contractor/ contractor should co-ordinate
+								Youngman to return back their material. In no case or for any reason principal contractor/ contractor can hold
+								their material of Youngman given on rent they are liable to return the same all condition.</p>
+							</li>
 
+						</ol>
+					</li>
+					<li>
+						<h6><u><strong>MISSING &amp; DAMAGES POLICY</strong></u></h6>
+						<ol>
+							<li> <p style="text-align:justify">At the time of delivery of material, material checklist is signed by client’s representative and can be asked to
+								be presented at time of pickup to justify if any claims are fair or not.</p>
+							</li>
+							<li><p style="text-align:justify"><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/damage_policy_jan_2021.pdf"><u>Damage Policy <span>&#38;</span> Price</u></a></p></li>
+							<li><p style="text-align:justify"><a href="https://youngmanbeta.s3.ap-south-1.amazonaws.com/missing_policy_jan_2021.pdf"><u>Missing Policy <span>&#38;</span> Price</u></a></p></li>
+							<li> <p style="text-align:justify">The above policies are by default accepted by the customer in case they place an order.</p></li>
+						</ol>
+					</li>
+				</ol>
+			</table>
 			<p style="text-align:justify">In case of any dispute whatsoever, the same shall be referred to the arbitration and the judgment/award given by the sole arbitrator appointed by YIPL shall be final and binding upon the undersigned entity. The Civil Suit at Delhi can also be filed at the option of YIPL.</p>
-			<p style="text-align:justify">I acknowledge that I have read, and do hereby accept the terms and conditions contained in this.</p>
-
-			<p></p>
+			<p style="text-align:justify">I acknowledge that I have read, and do hereby accept the terms and conditions contained in this.</p><br/>
+			<div class="row justify-content-start">
+				<div class="col-4">
+				  Signature of Customer and Stamp:
+				</div>
+				<div class="col-4" style="text-align:center;">
+				  Date:
+				</div>
+				<div class="col-4" style="margin-left:20px;">
+				  Place:
+				</div>
+			</div>
         </xpath>
 
     </template>
-
-
 </odoo>
